@@ -1,0 +1,671 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../WEB-INF/template/template_principal.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="head2">
+        #{sesionGestec.bloquearTecnico()}
+        #{sesionGestec.bloquearAdmin()}
+        <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
+        <link href="#{request.contextPath}/resources/css/estilosFormularios.css" rel="stylesheet"/>
+
+        <script src="#{request.contextPath}/resources/plugins/bootstrap-table/bootstrap-table.js" defer=""></script>
+        <script src="#{request.contextPath}/resources/js/admin.js" defer=""></script>
+        <script src="#{request.contextPath}/resources/js/Menu.js" defer=""></script>         
+    </ui:define>
+
+        <ui:define name="titulo">
+        
+        <f:view locale="#{sesionGestec.idiomaSeleccionado}">#{msjGestec.Inicio}</f:view>
+    
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="#{sesionGestec.dibujarMenu()}"/>
+    </ui:define>
+
+
+    <ui:define name="content">
+        <f:view locale="#{sesionGestec.idiomaSeleccionado}">
+        <div class="col-md-12 inicio">
+            <div class="col-md-12 encabezado">
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#recientes" data-toggle="tab">#{msjGestec.recientes}</a></li>
+                    <li role="presentation"><a href="#importantes" data-toggle="tab">#{msjGestec.importantes}</a></li>
+                    <li role="presentation"><a href="#eliminados" data-toggle="tab">#{msjGestec.eliminadas}</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="recientes" class="tab-pane fade in active">
+
+                        <div class="row">
+                            
+                            <div class="col-md-6 publicacion" style="padding-right:15px;padding-left:15px">
+
+                            <div class="col-md-12 contenido-publicacion" style="padding-right:0;padding-left:0">
+                                <div class="col-md-12" style="padding:0;">
+                                    <div class='notMensajesVistos' style="border:none; padding:0">
+
+                                        <div class="oferta">
+                                            <div class='notificacionMensaje2'>
+                                                <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
+                                            </div>
+                                            <h5 class='mensajeCorto pull-right'>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link dropdown-toggle fa fa-ellipsis-v" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Acciones" style="border:none">
+                                                    </button>
+                                                    <ul class="dropdown-menu" style="left:-140px" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="#" class="eliminarConversacion"><span class="fa fa-bullhorn"></span> #{msjGestec.reportar}</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="#"><span class="fa fa-eye-slash"></span> #{msjGestec.ocultar}</a></li>
+                                                    </ul>
+                                                </div>
+                                            </h5>
+                                           
+                                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle conectado'></span>Michael Medina</strong></h5>
+                                            <h5 class='tiempoMensaje' style="color:#fff">&nbsp;&nbsp;&nbsp;#{msjGestec.tiempo10}</h5>
+                                            <div class="descripcion-publicacion">
+                                                #{msjGestec.mensaje1}
+                                            </div>
+
+
+                                        </div>
+
+                                        <img class="imagen-publicacion" src="#{request.contextPath}/resources/img/computador.jpg" alt=""/>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 comentarios-publicacion">
+
+                                <div class="col-md-12 oferta">
+                                    <h5><strong>#{msjGestec.postulaciones} (10)</strong></h5>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <ul class="media-list">
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje2}
+                                            </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        #{msjGestec.mensaje3}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                        #{msjGestec.mensaje4}
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+
+
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje5}
+                                            </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        #{msjGestec.mensaje6}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                        #{msjGestec.mensaje7}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico4.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Orlando Moreno</h4>
+                                                        #{msjGestec.mensaje8}
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+                                    </ul>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="#{msjGestec.comenta}" style="margin-bottom:10px"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 publicacion" style="padding-right:15px;padding-left:15px">
+
+                            <div class="col-md-12 contenido-publicacion" style="padding-right:0;padding-left:0">
+                                <div class="col-md-12" style="padding:0;">
+                                    <div class='notMensajesVistos' style="border:none; padding:0">
+
+                                        <div class="pregunta">
+                                            <div class='notificacionMensaje2'>
+                                                <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
+                                            </div>
+                                            <h5 class='mensajeCorto pull-right'>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link dropdown-toggle fa fa-ellipsis-v" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Acciones" style="border:none">
+                                                    </button>
+                                                    <ul class="dropdown-menu" style="left:-140px" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="#" class="eliminarConversacion"><span class="fa fa-bullhorn"></span> #{msjGestec.reportar}</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="#"><span class="fa fa-eye-slash"></span> #{msjGestec.ocultar}</a></li>
+                                                    </ul>
+                                                </div>
+                                            </h5>
+                                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle desconectado'></span>Orlando Moreno</strong></h5>
+                                            <h5 class='tiempoMensaje' style="color:#fff">&nbsp;&nbsp;&nbsp;#{msjGestec.tiempo}</h5>
+                                            <div class="descripcion-publicacion">
+                                                #{msjGestec.mensaje9}
+                                            </div>
+
+
+                                        </div>
+
+                                        <img class="imagen-publicacion" src="#{request.contextPath}/resources/img/windows.jpg" alt=""/>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 comentarios-publicacion">
+
+                                <div class="col-md-12 pregunta">
+                                    <h5><strong>#{msjGestec.respuestas} (10)</strong></h5>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <ul class="media-list">
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje10}
+                                            </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        #{msjGestec.mensaje11}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                        #{msjGestec.mensaje12}
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+
+
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje13}
+                                            </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        .................
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                        #{msjGestec.mensaje14}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico4.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Orlando Moreno</h4>
+                                                        ..........................
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+                                    </ul>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="#{msjGestec.comenta}" style="margin-bottom:10px"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                        <div class="row">
+                            
+                            <div class="col-md-6 publicacion" style="padding-right:15px;padding-left:15px">
+
+                            <div class="col-md-12 contenido-publicacion" style="padding-right:0;padding-left:0">
+                                <div class="col-md-12" style="padding:0;">
+                                    <div class='notMensajesVistos' style="border:none; padding:0">
+
+                                        <div class="noticia">
+                                            <div class='notificacionMensaje2'>
+                                                <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
+                                            </div>
+                                            <h5 class='mensajeCorto pull-right'>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link dropdown-toggle fa fa-ellipsis-v" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Acciones" style="border:none">
+                                                    </button>
+                                                    <ul class="dropdown-menu" style="left:-140px" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="#" class="eliminarConversacion"><span class="fa fa-bullhorn"></span> #{msjGestec.reportar}</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="#"><span class="fa fa-eye-slash"></span> #{msjGestec.ocultar}</a></li>
+                                                    </ul>
+                                                </div>
+                                            </h5>
+                                            <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle desconectado'></span>Leider Parada</strong></h5>
+                                            <h5 class='tiempoMensaje' style="color:#fff">&nbsp;&nbsp;&nbsp;#{msjGestec.tiempo3}</h5>
+                                            <div class="descripcion-publicacion">
+                                                #{msjGestec.mensaje10}
+                                            </div>
+
+
+                                        </div>
+
+                                        <img class="imagen-publicacion" src="#{request.contextPath}/resources/img/reparacion.jpg" alt=""/>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 comentarios-publicacion">
+
+                                <div class="col-md-12 noticia">
+                                    <h5><strong>#{msjGestec.comentarios}</strong></h5>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <ul class="media-list">
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje101}
+                                                </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        #{msjGestec.mensaje102}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                        #{msjGestec.mensaje103}
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+
+
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje104}
+                                            </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        #{msjGestec.mensaje105}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                            .....................
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico4.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Orlando Moreno</h4>
+                                                        #{msjGestec.mensaje106}
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+                                    </ul>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="#{msjGestec.comenta}" style="margin-bottom:10px"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        
+                        <div class="col-md-6 publicacion" style="padding-right:15px;padding-left:15px">
+
+                            <div class="col-md-12 contenido-publicacion" style="padding-right:0;padding-left:0">
+                                <div class="col-md-12" style="padding:0;">
+                                    <div class='notMensajesVistos' style="border:none; padding:0">
+
+                                        <div class="oferta">
+                                            <div class='notificacionMensaje2'>
+                                                <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
+                                            </div>
+                                            <h5 class='mensajeCorto pull-right'>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link dropdown-toggle fa fa-ellipsis-v" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Acciones" style="border:none">
+                                                    </button>
+                                                    <ul class="dropdown-menu" style="left:-140px" aria-labelledby="dropdownMenu1">
+                                                        <li><a href="#" class="eliminarConversacion"><span class="fa fa-bullhorn"></span> #{msjGestec.reportar}</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="#"><span class="fa fa-eye-slash"></span> #{msjGestec.ocultar}</a></li>
+                                                    </ul>
+                                                </div>
+                                            </h5>
+                                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle conectado'></span>Michael Medina</strong></h5>
+                                            <h5 class='tiempoMensaje' style="color:#fff">&nbsp;&nbsp;&nbsp;#{msjGestec.tiempo10}</h5>
+                                            <div class="descripcion-publicacion">
+                                                #{msjGestec.mensaje1}
+                                            </div>
+
+
+                                        </div>
+
+                                        <img class="imagen-publicacion" src="#{request.contextPath}/resources/img/computador.jpg" alt=""/>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 comentarios-publicacion">
+
+                                <div class="col-md-12 oferta">
+                                    <h5><strong>#{msjGestec.postulaciones} (10)</strong></h5>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <ul class="media-list">
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje2}
+                                            </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        #{msjGestec.mensaje3}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                        #{msjGestec.mensaje4}
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+
+
+                                        <li class="media">
+
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                </a>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                #{msjGestec.mensaje5}
+                                            </div>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Ana Rodríguez</h4>
+                                                        #{msjGestec.mensaje6}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico3.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Michael Medina</h4>
+                                                        #{msjGestec.mensaje7}
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul>
+                                                <li class="media">
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico4.png" alt=""/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Orlando Moreno</h4>
+                                                        #{msjGestec.mensaje8}
+                                                    </div>
+                                                </li>
+                                            </ul>	    
+                                        </li>
+                                    </ul>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="#{msjGestec.comenta}" style="margin-bottom:10px"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    <div id="importantes" class="tab-pane fade">
+
+                        <h3>Menu 1</h3>
+                        <p>Some content in menu 1.</p>
+
+                    </div>
+                    <div id="eliminados" class="tab-pane fade">
+
+                        <h3>Menu 2</h3>
+                        <p>Some content in menu 2.</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </f:view>
+    </ui:define>
+    <ui:define name="bottom"></ui:define>
+
+</ui:composition>

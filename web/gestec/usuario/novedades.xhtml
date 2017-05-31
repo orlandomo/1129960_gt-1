@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../WEB-INF/template/template_principal.xhtml">
+
+
+    <ui:define name="head2">
+        <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="#{request.contextPath}/resources/plugins/bootstrap-table/bootstrap-table.css"/>
+
+        <script src="#{request.contextPath}/resources/plugins/bootstrap-table/bootstrap-table.js" defer=""></script>
+        <script src="#{request.contextPath}/resources/js/admin.js" defer=""></script>
+        <script src="#{request.contextPath}/resources/js/Menu.js" defer=""></script>  
+        <script src="#{request.contextPath}/resources/js/notificaciones.js" defer=""></script>  
+
+        <style>
+
+            div .card-view{
+                padding: 5px;
+            }
+            .table-hover>tbody>tr:hover{
+                background: #fff;
+            }
+            .bootstrap-table .table:not(.table-condensed) > tbody > tr > td.bs-checkbox{
+                padding: 7px 0 7px 7px;
+                vertical-align: middle;
+            }
+            .table>tbody>tr>td{
+                padding: 0;
+                border-bottom: 1px solid #ddd;
+            }
+            tr>td.selected{
+                background: #ddd;
+                border-bottom: 1px solid #000;
+            }
+        </style>
+
+    </ui:define>
+
+    <ui:define name="titulo">Novedades</ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="#{sesionGestec.dibujarMenu()}"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+
+        <div class=" col-md-12 inicio">
+            <div class="col-md-12 encabezado">
+
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#recientes" data-toggle="tab">Todos</a></li>
+                    <li role="presentation"><a href="#importantes" data-toggle="tab">Importantes</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="recientes" class="tab-pane fade in active">
+
+                        <button class="col-md-12 btn btn-danger" id="eliminar">Eliminar elementos seleccionados</button>
+
+                        <table id="table" data-click-to-select="true" class="table" data-toggle="table" data-card-view="true" style="border-left:1px solid#ccc;border-right:1px solid#ccc">
+                            <thead>
+                                <tr>
+                                    <th data-field="mensaje" data-checkbox="true"></th>
+                                    <th data-field="tiquet" data-align="left"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <strong>Ana Rodríguez también se postuló para la oferta de Álvaro Ramírez</strong>
+                                        <div class="col-md-12">
+                                            <ul class="media-list">
+                                                <li class="media">
+
+                                                    <div class="media-left">
+                                                        <a href="#">
+                                                            <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico1.jpg" alt=""/>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading">Álvaro Ramirez</h4>
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente inventore, quibusdam vel repellat maxime rerum quos provident magni laudantium fugit soluta quia eaque laboriosam quas.
+                                                    </div>
+
+                                                    <ul>
+                                                        <li class="media">
+                                                            <div class="media-left">
+                                                                <a href="#">
+                                                                    <img class="media-object img-circle" src="#{request.contextPath}/resources/img/tecnico2.jpg" alt=""/>
+                                                                </a>
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <h4 class="media-heading">Ana Rodríguez</h4>
+                                                                Lorem ipsum dolor sit amet, consectetur.
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+
+                                                </li>
+
+                                            </ul>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <strong>Álvaro Ramírez aceptó la cita</strong>
+
+                                        <div class="col-md-12 contenido-publicacion" style="padding-right:0;padding-left:0">
+                                            <div class="col-md-12" style="padding:0;">
+                                                <div class='notMensajesVistos' style="border:none; padding:0">
+
+                                                    <div class="oferta">
+                                                        <div class='notificacionMensaje2'>
+                                                            <img src="#{request.contextPath}/resources/img/tecnico1.jpg" alt='' class='imagenNotificacion'/>
+                                                        </div>
+                                                        <h5 class='mensajeCorto pull-right'>
+
+                                                        </h5>
+                                                        <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle conectado'></span>Michael Medina</strong></h5>
+                                                        <h5 class='tiempoMensaje' style="color:#fff">&nbsp;&nbsp;&nbsp;Hace 10 minutos</h5>
+                                                        <div class="descripcion-publicacion">
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus error nisi, consequatur alias iusto ullam, cupiditate corporis rem ipsam voluptates doloribus beatae inventore provident laborum voluptatem doloremque, quod, eum corrupti.
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h5><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore iure dolorum aliquid iste similique ipsum dolorem explicabo eum excepturi possimus.</strong></h5>                               
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h5><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore iure dolorum aliquid iste similique ipsum dolorem explicabo eum excepturi possimus.</strong></h5>                               
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h5><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore iure dolorum aliquid iste similique ipsum dolorem explicabo eum excepturi possimus.</strong></h5>                               
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h5><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore iure dolorum aliquid iste similique ipsum dolorem explicabo eum excepturi possimus.</strong></h5>                               
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h5><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore iure dolorum aliquid iste similique ipsum dolorem explicabo eum excepturi possimus.</strong></h5>                               
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h5><strong>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore iure dolorum aliquid iste similique ipsum dolorem explicabo eum excepturi possimus.</strong></h5>                               
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+                    <div id="importantes" class="tab-pane fade">
+
+                        <table id="table2" data-click-to-select="true" class="table" data-toggle="table" data-card-view="true" style="border-left:1px solid#ccc;border-right:1px solid#ccc">
+                            <thead>
+                                <tr>
+                                    <th data-field="check" data-checkbox="true"></th>
+                                    <th data-field="tiquet" data-align="left"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </ui:define>
+
+    <ui:define name="bottom"></ui:define>
+
+</ui:composition>
+

@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:pt="http://java.sun.com/jsf/passthrough"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./../../WEB-INF/template/template_principal.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="titulo">Solicitar servicio</ui:define>
+
+    <ui:define name="head2">
+        
+        <style>
+            .radio-inline{
+                padding-left: 0;
+            }
+            td,th{
+                padding-left: 10px;
+            }
+            input[type=radio]{
+                display: none;
+                
+            }
+            input[type=radio] + label{
+                cursor: pointer;
+                padding: 10px;
+                margin-left: 10px;
+                border: 1px solid #337AB7;
+                color: #337AB7;
+                width: 100%;
+                text-align: center;
+            }           
+            .cuadro:before{
+                content: '';
+                width: 100%;
+                padding: 10px 70px;
+                border: 1px solid #aaa;
+                float: left;
+            }
+            input[type=radio]:checked + label{
+                background: #337AB7;
+                
+                color: #fff;
+                border: 1px solid #337AB7;
+            } 
+        </style>
+
+        <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
+
+        <script src="#{request.contextPath}/resources/plugins/bootstrap-table/bootstrap-table.js" defer=""></script>
+        <script src="#{request.contextPath}/resources/js/admin.js" defer=""></script>
+        <script src="#{request.contextPath}/resources/js/Menu.js" defer=""></script>   
+        <script src="#{request.contextPath}/resources/js/archivo.js" defer=""></script>
+
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="#{sesionGestec.dibujarMenu()}"/> 
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-5">
+
+                        <label for="tipoServicio">Tipo</label>
+                        <h:selectOneMenu id="tipoServicio"
+                                         class="form-control"
+                                         value="#{citasRequest.tipoServicio}">
+                            <f:selectItem itemLabel="Instalación" itemValue="1"/>
+                            <f:selectItem itemLabel="Mantenimiento" itemValue="2"/>
+                            <f:selectItem itemLabel="Diagnóstico" itemValue="3"/>
+                        </h:selectOneMenu>
+
+                    </div>
+                    <div class="col-md-5">
+
+                        <label for="tipoEquipo">Equipo</label>
+                        <h:selectOneMenu id="tipoEquipo"
+                                         class="form-control"
+                                         value="#{citasRequest.tipoEquipo}">
+                            <f:selectItem itemLabel="Móvil" itemValue="1"/>
+                            <f:selectItem itemLabel="Computador" itemValue="2"/>
+                        </h:selectOneMenu>
+
+                    </div>
+                    <div class="col-md-2">       
+                        <label for="cantEquipos">Cant. equipos</label>
+                        <h:inputText id="cantEquipos"
+                                     class="form-control" 
+                                     maxlength="4"
+                                     required="true"
+                                     requiredMessage="Mínimo 1 equipo"
+                                     value="#{citasRequest.cantidadEquipos}"/>   
+                        <h:message for="cantEquipos" style="color:red"  styleClass="error"></h:message>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="form-group col-md-6">
+                        <label for="localidad">Localidad </label>
+                        <c:forEach items="#{citasRequest.direcciones}" var="localidad">
+                            <h:selectOneMenu id="localidad" 
+                                             class="form-control" 
+                                             style="margin-top:0"
+                                             value="#{citasRequest.noLocalidad}">
+                                <c:forEach items="#{citasRequest.localidades}" var="l">
+                                    <f:selectItem itemLabel="#{l.nombreLocalidad}" itemValue="#{l.idLocalidad}"/>
+                                </c:forEach>
+                                <f:ajax event="change" listener="#{citasRequest.llenarBarrios}" render="barrio"
+                                        execute="@this"/>
+                            </h:selectOneMenu>
+                        </c:forEach>
+                    </div>
+                   
+                    <div class="form-group col-md-6">
+                        <label for="barrio">Barrio </label>
+                        <c:forEach items="#{citasRequest.direcciones}" var="barrio">
+                            <f:selectItem itemLabel="#{barrio.idBarrio.nombreBarrio}" 
+                                          itemValue="#{barrio.idBarrio.idBarrio}"/>
+                            <h:selectOneMenu id="barrio" 
+                                             class="form-control" 
+                                             style="margin-top:0"
+                                             value="#{citasRequest.direccion.idBarrio.idBarrio}">
+                                <c:forEach items="#{citasRequest.nombreBarrios}" var="bar">
+                                    <f:selectItem itemLabel="#{bar.nombreBarrio}" itemValue="#{bar.idBarrio}"/>
+                                </c:forEach>
+
+                            </h:selectOneMenu>
+                        </c:forEach>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 15px;margin-top: 10px">
+                        <label for="direccion" class="col-md-12">Dirección </label>
+                        <hr class="col-md-12" style="border-top-color: #999;margin-top: 10px"/>
+                        <div class="form-group col-md-2">
+                            <h:selectOneMenu id="tipovia"
+                                             class="form-control" 
+                                             style="margin-top:0"
+                                             required="true"
+                                             validatorMessage="Minimo 2 caracteres"
+                                             requiredMessage="El barrio es obligatorio"
+                                             value="#{citasRequest.direccion.tipoVia}">
+                                <f:selectItem itemLabel="Av calle"/>
+                                <f:selectItem itemLabel="Av carrera"/>
+                                <f:selectItem itemLabel="Transversal"/>
+                                <f:selectItem itemLabel="Calle"/>
+                                <f:selectItem itemLabel="Carrera"/>
+                            </h:selectOneMenu>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="col-md-4">
+                                <h:inputText id="numerovia" class="form-control col-md-2"
+                                             value="#{citasRequest.direccion.numeroVia}"
+                                             required="true"
+                                             maxlength="4"
+                                             requiredMessage="Requerido"/>
+                                <h:message for="numerovia" style="color:red"  styleClass="error"></h:message>
+                            </div>
+                            <div class="col-md-4">
+                                <h:inputText id="complementovia" class="form-control col-md-2"
+                                             value="#{citasRequest.direccion.complementoVia}"
+                                             required="true"
+                                             maxlength="4"
+                                             requiredMessage="Requerido"/>
+                                <h:message for="complementovia" style="color:red"  styleClass="error"></h:message>
+                            </div> 
+                            <div class="col-md-4">
+                                <h:inputText id="numerovia2" class="form-control col-md-2"
+                                             value="#{citasRequest.direccion.numeroVia2}"
+                                             required="true"
+                                             maxlength="4"
+                                             requiredMessage="Requerido"/>
+                                <h:message for="numerovia2" style="color:red"  styleClass="error"></h:message>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="col-md-6">
+                                <h:inputText id="complementovia2" class="form-control col-md-2"
+                                             value="#{citasRequest.direccion.complementoVia2}"
+                                             required="true"
+                                             maxlength="4"
+                                             requiredMessage="Requerido"/>
+                                <h:message for="complementovia2" style="color:red"  styleClass="error"></h:message>
+                            </div>
+                            <div class="col-md-6">
+                                <h:inputText id="numerocasa" class="form-control col-md-2"
+                                             value="#{citasRequest.direccion.numeroCasa}"
+                                             required="true"
+                                             maxlength="4"
+                                             requiredMessage="Requerido">
+                                    
+                                </h:inputText>
+                                <h:message for="numerocasa" style="color:red"  styleClass="error"></h:message>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <h:selectOneMenu id="complemento"
+                                             class="form-control" 
+                                             style="margin-top:0"
+                                             value="#{citasRequest.direccion.complemento}">
+                                <f:selectItem itemLabel="Sur"/>
+                                <f:selectItem itemLabel="Occidente"/>
+                                <f:selectItem itemLabel="Norte"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-9">
+                        <label for="descripcion">Descripción</label>
+                        <h:inputText id="descripcion" 
+                                        class="form-control"
+                                        maxlength="300"
+                                        required="true"
+                                        requiredMessage="Escriba una descripción"
+                                        value="#{citasRequest.servicio.descripcionServicio}"/>
+                        <h:message for="descripcion" style="color:red"  styleClass="error"></h:message>
+                    </div>
+                    <div class="col-md-3" style="margin-top: 25px;">
+                        <button class="btn btn-default btn-archivo col-md-12" style="overflow: hidden;padding: 16px;position: relative;cursor: pointer">
+                            <span class="fa fa-file-image-o"></span> Adjuntar imagen
+                            <input type="file" accept="image/*" class="form-control archivo" style="position: absolute;width: 100%;height: 100%;top: 0;left: 0;opacity: 0;cursor: pointer"/>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <label class="col-md-12" style="margin-left: 10px">¿A quién desea enviar la solicitud? </label>
+                    <br/>
+                    <div class="col-md-12" style="padding-left: 0">
+                        <br/>
+                        <h:selectOneRadio id="tecnicos" value="#{citasRequest.tecnicos}"
+                                          class="col-md-12"
+                                          styleClass ="radio-inline" enabledClass ="radio-inline">
+                            <f:selectItem itemLabel=" Técnicos disponibles" itemValue="1"/>
+                            <f:selectItem itemLabel=" Buscar técnico" itemValue="2"/>
+                            <f:selectItem itemLabel=" Último técnico" itemValue="3"/>
+                        </h:selectOneRadio>
+                    </div>
+                </div>
+                
+
+                    <h:commandButton action="#{citasRequest.ingresarCita()}" 
+                                     class="btn btn-primary col-md-3 pull-right" value="Publicar cita"/>
+                                
+            </div>
+            
+        </h:form>
+        
+    </ui:define>
+
+    <ui:define name="bottom"></ui:define>
+
+
+
+
+</ui:composition>
+
+
+
+
+
