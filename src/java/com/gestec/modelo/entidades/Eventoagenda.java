@@ -7,6 +7,7 @@ package com.gestec.modelo.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,6 +28,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Eventoagenda.findByFechaFin", query = "SELECT e FROM Eventoagenda e WHERE e.fechaFin = :fechaFin"),
     @NamedQuery(name = "Eventoagenda.findByTipoEvento", query = "SELECT e FROM Eventoagenda e WHERE e.tipoEvento = :tipoEvento")})
 public class Eventoagenda implements Serializable {
+
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -73,11 +77,13 @@ public class Eventoagenda implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "tipoEvento")
     private String tipoEvento;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "eventoagenda")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "eventoAgenda")
     private Citas citas;
     @JoinColumn(name = "usuarios_idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)
     private Usuarios usuariosidUsuario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventoAgenda")
+    private List<Citas> citasList;
 
     public Eventoagenda() {
     }
@@ -181,6 +187,15 @@ public class Eventoagenda implements Serializable {
     @Override
     public String toString() {
         return "com.gestec.modelo.entidades.Eventoagenda[ idEvento=" + idEvento + " ]";
+    }
+
+    @XmlTransient
+    public List<Citas> getCitasList() {
+        return citasList;
+    }
+
+    public void setCitasList(List<Citas> citasList) {
+        this.citasList = citasList;
     }
     
 }

@@ -58,6 +58,12 @@ public class Usuarios implements Serializable {
     @Lob
     @Column(name = "documentoEscaneado")
     private byte[] documentoEscaneado;
+    @Column(name = "cantidadNotificaciones")
+    private Integer cantidadNotificaciones;
+    @Column(name = "cantidadMensajes")
+    private Integer cantidadMensajes;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<NotificacionUsuario> notificacionUsuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContacto")
     private List<Contactos> contactosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
@@ -380,21 +386,6 @@ public class Usuarios implements Serializable {
         return "com.gestec.modelo.entidades.Usuarios[ idUsuario=" + idUsuario + " ]";
     }
 
-    public byte[] getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(byte[] fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
-    }
-
-    public byte[] getDocumentoEscaneado() {
-        return documentoEscaneado;
-    }
-
-    public void setDocumentoEscaneado(byte[] documentoEscaneado) {
-        this.documentoEscaneado = documentoEscaneado;
-    }
 
     @XmlTransient
     public List<Contactos> getContactosList() {
@@ -412,6 +403,48 @@ public class Usuarios implements Serializable {
 
     public void setContactosList1(List<Contactos> contactosList1) {
         this.contactosList1 = contactosList1;
+    }
+
+
+    public Integer getCantidadNotificaciones() {
+        return cantidadNotificaciones;
+    }
+
+    public void setCantidadNotificaciones(Integer cantidadNotificaciones) {
+        this.cantidadNotificaciones = cantidadNotificaciones;
+    }
+
+    public Integer getCantidadMensajes() {
+        return cantidadMensajes;
+    }
+
+    public void setCantidadMensajes(Integer cantidadMensajes) {
+        this.cantidadMensajes = cantidadMensajes;
+    }
+
+    @XmlTransient
+    public List<NotificacionUsuario> getNotificacionUsuarioList() {
+        return notificacionUsuarioList;
+    }
+
+    public void setNotificacionUsuarioList(List<NotificacionUsuario> notificacionUsuarioList) {
+        this.notificacionUsuarioList = notificacionUsuarioList;
+    }
+
+    public byte[] getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(byte[] fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public byte[] getDocumentoEscaneado() {
+        return documentoEscaneado;
+    }
+
+    public void setDocumentoEscaneado(byte[] documentoEscaneado) {
+        this.documentoEscaneado = documentoEscaneado;
     }
     
 }

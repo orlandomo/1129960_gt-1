@@ -7,6 +7,7 @@ package com.gestec.modelo.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,13 +18,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,6 +41,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Citas.findByDuracionCita", query = "SELECT c FROM Citas c WHERE c.duracionCita = :duracionCita"),
     @NamedQuery(name = "Citas.findByEstadoCita", query = "SELECT c FROM Citas c WHERE c.estadoCita = :estadoCita")})
 public class Citas implements Serializable {
+
+    @OneToMany(mappedBy = "idCita")
+    private List<NotificacionCita> notificacionCitaList;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "filtro")
+    private int filtro;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,9 +77,9 @@ public class Citas implements Serializable {
     @JoinColumn(name = "solicitud_idsolicitud", referencedColumnName = "idsolicitud")
     @ManyToOne(optional = false)
     private Solicitud solicitudIdsolicitud;
-    @JoinColumn(name = "idCita", referencedColumnName = "idEvento", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Eventoagenda eventoagenda;
+    @JoinColumn(name = "id_evento", referencedColumnName = "idEvento")
+    @ManyToOne(optional = false)
+    private Eventoagenda eventoAgenda;
 
     public Citas() {
     }
@@ -132,13 +142,14 @@ public class Citas implements Serializable {
     public void setSolicitudIdsolicitud(Solicitud solicitudIdsolicitud) {
         this.solicitudIdsolicitud = solicitudIdsolicitud;
     }
+   
 
-    public Eventoagenda getEventoagenda() {
-        return eventoagenda;
+    public Eventoagenda getEventoAgenda() {
+        return eventoAgenda;
     }
 
-    public void setEventoagenda(Eventoagenda eventoagenda) {
-        this.eventoagenda = eventoagenda;
+    public void setEventoAgenda(Eventoagenda eventoAgenda) {
+        this.eventoAgenda = eventoAgenda;
     }
 
     @Override
@@ -164,6 +175,23 @@ public class Citas implements Serializable {
     @Override
     public String toString() {
         return "com.gestec.modelo.entidades.Citas[ idCita=" + idCita + " ]";
+    }
+
+    public int getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(int filtro) {
+        this.filtro = filtro;
+    }
+
+    @XmlTransient
+    public List<NotificacionCita> getNotificacionCitaList() {
+        return notificacionCitaList;
+    }
+
+    public void setNotificacionCitaList(List<NotificacionCita> notificacionCitaList) {
+        this.notificacionCitaList = notificacionCitaList;
     }
     
 }

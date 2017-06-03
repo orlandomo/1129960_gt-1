@@ -8,11 +8,15 @@ package com.gestec.modelo.controladores;
 import com.gestec.modelo.entidades.Barrio;
 import com.gestec.modelo.entidades.Contactos;
 import com.gestec.modelo.entidades.Localidad;
+import com.gestec.modelo.entidades.NotificacionCita;
+import com.gestec.modelo.entidades.NotificacionUsuario;
 import com.gestec.modelo.entidades.Relcalificacionusuarios;
 import com.gestec.modelo.entidades.Usuarios;
 import com.gestec.modelo.persistencia.BarrioFacadeLocal;
 import com.gestec.modelo.persistencia.ContactosFacadeLocal;
 import com.gestec.modelo.persistencia.LocalidadFacadeLocal;
+import com.gestec.modelo.persistencia.NotificacionCitaFacadeLocal;
+import com.gestec.modelo.persistencia.NotificacionUsuarioFacadeLocal;
 import com.gestec.modelo.persistencia.UsuariosFacadeLocal;
 import java.io.IOException;
 import java.io.Serializable;
@@ -47,11 +51,17 @@ public class SesionController implements Serializable {
     private BarrioFacadeLocal bfl;
     @EJB
     private ContactosFacadeLocal cfl;
+    @EJB
+    private NotificacionUsuarioFacadeLocal nfl;
+    @EJB
+    private NotificacionCitaFacadeLocal ncfl;
 
     private String nombreUsuario;
     private String contrasena;
     private List<Localidad> localidades;
     private List<String> barriosLocalidades;
+    List<NotificacionUsuario> notificaciones;
+    List<NotificacionCita> notificacionesCita;
     private Integer numeroLocalidad;
     private List<Barrio> barrios;
     private List<String> nombreBarrios;
@@ -67,6 +77,8 @@ public class SesionController implements Serializable {
         this.contacto = new Contactos();
         this.localidades = lfl.findAll();
         this.barrios = bfl.findAll();
+        this.notificaciones = nfl.findAll();
+        this.notificacionesCita = ncfl.findAll();
         
         FacesContext fc= FacesContext.getCurrentInstance();
         idiomaSeleccionado=new Locale("es");
@@ -169,6 +181,22 @@ public class SesionController implements Serializable {
 
     public void setNombreBarrios(List<String> nombreBarrios) {
         this.nombreBarrios = nombreBarrios;
+    }
+
+    public List<NotificacionUsuario> getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(List<NotificacionUsuario> notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
+    public List<NotificacionCita> getNotificacionesCita() {
+        return notificacionesCita;
+    }
+
+    public void setNotificacionesCita(List<NotificacionCita> notificacionesCita) {
+        this.notificacionesCita = notificacionesCita;
     }
 
     public String iniciarSesion() {

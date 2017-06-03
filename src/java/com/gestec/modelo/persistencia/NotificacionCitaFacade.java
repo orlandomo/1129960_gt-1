@@ -5,7 +5,7 @@
  */
 package com.gestec.modelo.persistencia;
 
-import com.gestec.modelo.entidades.Caracteristica;
+import com.gestec.modelo.entidades.NotificacionCita;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author michael
  */
 @Stateless
-public class CaracteristicaFacade extends AbstractFacade<Caracteristica> implements CaracteristicaFacadeLocal {
+public class NotificacionCitaFacade extends AbstractFacade<NotificacionCita> implements NotificacionCitaFacadeLocal {
 
     @PersistenceContext(unitName = "gestecPU")
     private EntityManager em;
@@ -24,9 +24,9 @@ public class CaracteristicaFacade extends AbstractFacade<Caracteristica> impleme
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    public CaracteristicaFacade() {
-        super(Caracteristica.class);
+
+    public NotificacionCitaFacade() {
+        super(NotificacionCita.class);
     }
     
 }

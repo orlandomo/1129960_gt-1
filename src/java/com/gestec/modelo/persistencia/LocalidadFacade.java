@@ -6,7 +6,6 @@
 package com.gestec.modelo.persistencia;
 
 import com.gestec.modelo.entidades.Localidad;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,7 +29,7 @@ public class LocalidadFacade extends AbstractFacade<Localidad> implements Locali
     public LocalidadFacade() {
         super(Localidad.class);
     }
-
+    
     @Override
     public Localidad llenarBarriosLocalidad(Integer idLocalidad) {
         TypedQuery<Localidad> q = getEntityManager().createNamedQuery("Localidad.findByIdLocalidad", Localidad.class);

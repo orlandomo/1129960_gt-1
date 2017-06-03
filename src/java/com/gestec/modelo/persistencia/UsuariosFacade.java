@@ -29,7 +29,7 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
     public UsuariosFacade() {
         super(Usuarios.class);
     }
-
+    
     @Override
     public Usuarios iniciarSesion(String nombreUsuario, String clave) {
         try {
@@ -43,5 +43,5 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
         }
         return null;
     }
-
+    
 }
