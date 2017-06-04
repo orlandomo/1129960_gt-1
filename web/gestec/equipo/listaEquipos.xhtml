@@ -27,6 +27,7 @@
         <script type="text/javascript" src="#{request.contextPath}/resources/plugins/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
         <script type="text/javascript" src="#{request.contextPath}/resources/plugins/tableExport/libs/html2canvas/html2canvas.min.js"></script>
         <script type="text/javascript" src="#{request.contextPath}/resources/plugins/tableExport/tableExport.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/excel.js"></script>
     </ui:define>
 
     <ui:define name="menu">
@@ -44,7 +45,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li><a href="#" id="pdf"><span class="fa fa-file-pdf-o"></span> PDF</a></li>
                     <li><a href="#" id="word"><span class="fa fa-file-word-o"></span> WORD</a></li>
-                    <li><a href="#" id="excel"><span class="fa fa-file-excel-o"></span> EXCEL</a></li>
+                    <li><a href="#" id="excel" onclick="tableToExcel('tafiltro', 'W3C Example Table')"><span class="fa fa-file-excel-o"></span> EXCEL</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#" id="json"><span class="fa fa-file-text"></span> JSON</a></li>
                     <li><a href="#" id="xml"><span class="fa fa-file-text-o"></span> XML</a></li>

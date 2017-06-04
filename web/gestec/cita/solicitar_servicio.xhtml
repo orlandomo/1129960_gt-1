@@ -46,7 +46,7 @@
                 border: 1px solid #337AB7;
             } 
         </style>
-        #{citasRequest.validarCita()}
+        #{citasRequestt.validarCita()}
         <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
         <link href="#{request.contextPath}/resources/css/estilosFormularios.css" rel="stylesheet"/>
         <script src="#{request.contextPath}/resources/plugins/bootstrap-table/bootstrap-table.js" defer=""></script>
@@ -72,7 +72,7 @@
                     <h:selectOneMenu id="tipoServicio"
                                      class="form-control"
                                      style="margin-top: 0"
-                                     value="#{citasRequest.tipoServicio}">
+                                     value="#{citasRequestt.tipoServicio}">
                         <f:selectItem itemLabel="Instalación" itemValue="1"/>
                         <f:selectItem itemLabel="Mantenimiento" itemValue="2"/>
                         <f:selectItem itemLabel="Diagnóstico" itemValue="3"/>
@@ -83,7 +83,7 @@
                     <h:selectOneMenu id="tipoEquipo"
                                      style="margin-top: 0"
                                      class="form-control"
-                                     value="#{citasRequest.tipoEquipo}">
+                                     value="#{citasRequestt.tipoEquipo}">
                         <f:selectItem itemLabel="Móvil" itemValue="1"/>
                         <f:selectItem itemLabel="Computador" itemValue="2"/>
                     </h:selectOneMenu>
@@ -95,7 +95,7 @@
                                  maxlength="4"
                                  required="true"
                                  requiredMessage="Mínimo 1 equipo"
-                                 value="#{citasRequest.cantidadEquipos}"/>   
+                                 value="#{citasRequestt.cantidadEquipos}"/>   
                     <h:message for="cantEquipos" style="color:red"  styleClass="error"></h:message>
                 </div>
             </div>
@@ -109,14 +109,14 @@
                          maxlength="300"
                          required="true"
                          requiredMessage="Escriba una descripción"
-                         value="#{citasRequest.evento.descripcionEvento}"/>
+                         value="#{citasRequestt.evento.descripcionEvento}"/>
             <h:message for="descripcion" style="color:red"  styleClass="error"></h:message>
 
             <div class="row">
                 <div class="col-md-4">
                     <label for="fechaCita">#{msjGestec.solicitar2}</label>
                     <h:inputText id="fechaCita"
-                                 value="#{citasRequest.nuevaCita.fechaCita}" 
+                                 value="#{citasRequestt.nuevaCita.fechaCita}" 
                                  class="form-control"         
                                  size="20" 
                                  required="true"
@@ -130,7 +130,7 @@
                 <div class="col-md-4">
                     <label for="fechaInicio">#{msjGestec.desde}</label>
                     <h:inputText id="fechaInicio"
-                                 value="#{citasRequest.horaDisponibilidad.horaInicio}" 
+                                 value="#{citasRequestt.horaDisponibilidad.horaInicio}" 
                                  class="form-control"         
                                  size="20" 
                                  required="true"
@@ -146,7 +146,7 @@
                 <div class="col-md-4">
                     <label for="fechafin">#{msjGestec.hasta}</label>
                     <h:inputText id="fechaFin"
-                                 value="#{citasRequest.horaDisponibilidad.horaFin}" 
+                                 value="#{citasRequestt.horaDisponibilidad.horaFin}" 
                                  class="form-control"
                                  size="20" 
                                  required="true"
@@ -163,7 +163,7 @@
             
 
             <label class="col-md-12">#{msjGestec.solicitar3}</label>
-            <h:selectOneRadio id="tecnicos" value="#{citasRequest.tecnicos}"
+            <h:selectOneRadio id="tecnicos" value="#{citasRequestt.tecnicos}"
                               class="col-md-12"
                               styleClass ="radio-inline" enabledClass ="radio-inline">
                 <f:selectItem itemLabel=" #{msjGestec.solicitar4}" itemValue="1"/>
@@ -173,7 +173,7 @@
 
             
             <div class="row">  
-                <h:commandButton actionListener="#{citasRequest.ingresarCita()}" 
+                <h:commandButton actionListener="#{citasRequestt.ingresarCita()}" 
                                  class="btn btn-primary col-md-3 pull-right" value="#{msjGestec.publicar}"/>
             </div>
         </h:form>
