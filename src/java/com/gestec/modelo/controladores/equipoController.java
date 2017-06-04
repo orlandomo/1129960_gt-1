@@ -4,13 +4,13 @@ import com.gestec.modelo.entidades.Equipo;
 import com.gestec.modelo.persistencia.EquipoFacadeLocal;
 import com.gestec.modelo.persistencia.EquipoFacade;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 
 @Named(value = "equipoController")
-@RequestScoped
+@SessionScoped
 public class equipoController {
 
     @EJB
@@ -79,9 +79,8 @@ public class equipoController {
         return "datosEquipo";
     }
 
-    public String eliminarEquipo() {
-        efl.remove(this.e);
-        return "/faces/gestec/equipo/listaEquipos";
+    public void eliminar(){
+        efl.remove(e);
         
     }
 

@@ -99,7 +99,7 @@
                                 &nbsp;&nbsp;<h:commandLink action="#{equipoController.vista(e)}">
                                     <i class="fa fa-eye" aria-hiddem="true"></i>
                                 </h:commandLink>
-                                <h:commandLink action="#{equipoController.eliminarEquipo(e)}">
+                                <h:commandLink action="#{equipoController.setE(e)}">
                                     <i class="fa fa-times" aria-hiddem="true"></i>
                                 </h:commandLink>
                             </td>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="modal-body">
                         <h:panelGroup id="nombreActualizar">
-                            <p>¿ Esta Seguro de eliminar  : #{equipoController.e.descripcionEquipo} ?</p>
+                            <p>¿ Esta Seguro de eliminar #{equipoController.e.descripcionEquipo} ?</p>
                         </h:panelGroup>
                     </div>
                     <div class="modal-footer">
@@ -133,7 +133,7 @@
                         <h:form>
 
 
-                            <h:commandButton action="#{equipoController.eliminarEquipo()}"  class="btn btn-danger pull-right"  value="Eliminar">
+                            <h:commandButton actionListener="#{equipoController.eliminar()}"  class="btn btn-danger pull-right"  value="Eliminar">
                             </h:commandButton>   
 
 
