@@ -61,7 +61,7 @@ public class equipoController {
         this.efl.create(this.e);
         this.e = new Equipo();
         this.equipos = this.efl.findAll();
-        return "";
+        return "/faces/gestec/equipo/listaEquipos";
     }
 
     public String edit(Equipo e) {
@@ -74,9 +74,14 @@ public class equipoController {
         this.e = new Equipo();
         return "";
     }
+    public String vista(Equipo e){
+        this.e=e;
+        return "datosEquipo";
+    }
 
-    public void eliminarEquipo(Equipo e) {
-        this.efl.remove(e);
+    public void eliminarEquipo() {
+        this.efl.remove(this.e);
+        
     }
 
     @Override

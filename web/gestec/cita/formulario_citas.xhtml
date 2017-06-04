@@ -7,7 +7,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="./../../WEB-INF/template/template_principal.xhtml">
 
-    <ui:define name="titulo">Modificar cita</ui:define>
+    <ui:define name="titulo">
+        <f:view>
+        #{msjGestec.citasModificarCita}
+        </f:view>
+    </ui:define>
 
     <ui:define name="head2">
         <style>
@@ -76,23 +80,23 @@
     </ui:define>
 
     <ui:define name="content">
-
-        <h2><strong><center>Datos servicio</center></strong></h2>
+        <f:view>
+            <h2><strong><center>#{msjGestec.citasDatosServicio}</center></strong></h2>
         <hr/>
 
         
         <h:form id="sddssd" prependId="false">
 
             <div class="form-group col-md-12" style="margin-top: 10px">
-                <label for="nombre">Duracion </label>
+                <label for="nombre">#{msjGestec.citasDuracion} </label>
                 <h:inputText id="nombre" class="form-control" value="#{citasRequest.citaModificada.duracionCita}"/>
             </div>
             <div class="form-group col-md-12">
-                <label for="apellido">Costo </label>
+                <label for="apellido">#{msjGestec.citasCosto} </label>
                 <h:inputText id="apellido" class="form-control" value="#{citasRequest.citaModificada.servicionoTiquet.costoServicio}"/>
             </div>
             <div class="form-group col-md-12">
-                <label for="descripcion">Descripcion </label>
+                <label for="descripcion">#{msjGestec.citasDescripcion} </label>
                 <h:inputTextarea id="descripcion" class="form-control" rows="2" value="#{citasRequest.citaModificada.servicionoTiquet.descripcionServicio}"></h:inputTextarea>
             </div>
 
@@ -103,7 +107,7 @@
 
 
         </h:form>
-
+        </f:view>
     </ui:define>
 
     <ui:define name="bottom"></ui:define>

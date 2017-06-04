@@ -3,6 +3,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 template="./../../WEB-INF/template/template_principal.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -18,7 +19,7 @@
         <script src="#{request.contextPath}/resources/js/admin.js" defer=""></script>
         <script src="#{request.contextPath}/resources/js/Menu.js" defer=""></script> 
         <script src="#{request.contextPath}/resources/js/tabla_citas.js" defer=""></script> 
-
+        <script type="text/javascript" src="#{request.contextPath}/resources/js/jquery-1.10.2.min.js" defer=""></script>
 
         <script type="text/javascript" src="#{request.contextPath}/resources/plugins/tableExport/libs/js-xlsx/xlsx.core.min.js"></script>
         <script type="text/javascript" src="#{request.contextPath}/resources/plugins/tableExport/libs/FileSaver/FileSaver.min.js"></script>
@@ -54,7 +55,7 @@
                     <li><a href="#" id="png"><span class="fa fa-file-image-o"></span> PNG</a></li>
                 </ul>
             </div>
-            <button class="btn btn-primary col-md-5 col-sm-4 col-xs-12" style="margin: 10px 0px;text-decoration: none;"><a href="#{request.contextPath}/faces/gestec/equipo/formEquipo.xhtml" style="text-decoration: none;color:white;">&nbsp; #{msjGestec.nuevo}</a></button>
+            <a href="#{request.contextPath}/faces/gestec/equipo/formEquipo.xhtml" style="text-decoration: none;color:white;"><button class="btn btn-primary col-md-5 col-sm-4 col-xs-12" style="margin: 10px 0px;text-decoration: none;">&nbsp; #{msjGestec.nuevo}</button></a>
             <button class="btn btn-danger col-md-5 col-sm-4 col-xs-12" id="eliminar" style="margin: 10px 0px"><span class="fa fa-trash"></span> &nbsp;#{msjGestec.eliminar}</button>
         </div>
 
@@ -89,12 +90,17 @@
                             <td>&nbsp;&nbsp;<h:commandLink action="#{equipoController.edit(e)}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 </h:commandLink>
-                                &nbsp;&nbsp;<h:commandLink 
-                                    action="#{equipoController.eliminarEquipo(e)}" 
-                                    onclick="return confirm('Seguro que deseas eliminar este registro?'),
-                                                    location.reload(true)"><i class="fa fa-times" aria-hidden="true">
-
+                                &nbsp;&nbsp;<h:commandLink
+                                    pt:data-toggle="modal" pt:data-target="#myModalEliminar"
+                                    ><i class="fa fa-times" aria-hidden="true">
+                                        <f:ajax event="click" listener="#{equipoController.setE(es)}" render="nombreActualizar"></f:ajax>
                                     </i></h:commandLink>
+                                &nbsp;&nbsp;<h:commandLink action="#{equipoController.vista(e)}">
+                                    <i class="fa fa-eye" aria-hiddem="true"></i>
+                                </h:commandLink>
+                                <h:commandLink action="#{equipoController.eliminarEquipo(e)}">
+                                    <i class="fa fa-times" aria-hiddem="true"></i>
+                                </h:commandLink>
                             </td>
                         </tr>
                     </c:forEach>
@@ -103,6 +109,40 @@
             <tfoot>
             </tfoot>
         </table>
+
+
+
+        <div id="myModalEliminar" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Eliminar Equipo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h:panelGroup id="nombreActualizar">
+                            <p>¿ Esta Seguro de eliminar  : #{equipoController.e.descripcionEquipo} ?</p>
+                        </h:panelGroup>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                        <h:form>
+
+
+                            <h:commandButton action="#{equipoController.eliminarEquipo()}"  class="btn btn-danger pull-right"  value="Eliminar">
+                            </h:commandButton>   
+
+
+                        </h:form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </ui:define>
 

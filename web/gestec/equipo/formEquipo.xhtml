@@ -64,7 +64,9 @@
                         <h:inputText class="form-control" value="#{equipoController.e.tipoEquipo}"></h:inputText>
                     </div></div>
                 <hr/>
+                <h:form>
                 <h:commandButton class="btn btn-primary form-control" value="#{msjGestec.registrar1}" action="#{equipoController.insertarEquipo()}"></h:commandButton><br/><br/>
+                </h:form>
                 <a href="#{request.contextPath}/faces/gestec/equipo/listaEquipos.xhtml"><h:inputText value="#{msjGestec.volver}" class="btn btn-default form-control"></h:inputText></a>
             </h:form>
         </div>

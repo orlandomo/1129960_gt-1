@@ -61,11 +61,15 @@
                         <h:inputText  class="form-control" value="#{equipoController.e.tipoEquipo}"/>
                     </div></div>
                 <hr/>
+                
+                <h:form>
                 <h:commandButton class="btn btn-primary form-control" value="#{msjGestec.actualizar}" action="#{equipoController.edit()}" onclick="return alert('#{msjGestec.alert}')"/>
+                </h:form>
 
+                <br/>
 
-                <br/><br/>
-                <button class="btn btn-default form-control"><a href="#{request.contextPath}/faces/gestec/equipo/listaEquipos.xhtml" style="text-decoration: none;color:black;">#{msjGestec.volver}</a></button>
+                
+                <a href="#{request.contextPath}/faces/gestec/equipo/listaEquipos.xhtml"><h:inputText value="#{msjGestec.volver}" class="btn btn-default form-control"></h:inputText></a>
             </h:form>
         </div>
 

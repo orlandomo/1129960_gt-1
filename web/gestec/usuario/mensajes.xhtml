@@ -3,7 +3,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./../../WEB-INF/template/template_principal.xhtml">
+                template="./../../WEB-INF/template/template_principal.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="head2">
         <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
@@ -40,7 +41,10 @@
         </style>
     </ui:define>
 
-    <ui:define name="titulo">Mensajes</ui:define>
+    <ui:define name="titulo">
+        <f:view>#{msjGestec.mensajes}
+        </f:view>
+    </ui:define>
 
     <ui:define name="menu">
         <ui:include src="#{sesionGestec.dibujarMenu()}"/>
@@ -48,7 +52,7 @@
 
 
     <ui:define name="content">
-
+        <f:view>
 
 
         <div class="row">
@@ -65,8 +69,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle conectado'></span>Carlos Sarmiento</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 17 horas</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo5}</h5>
                         </div>
                     </div>
                     <div class='notMensajes'>
@@ -75,8 +79,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle conectado'></span>Michael Medina</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 5 horas</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo4}</h5>
                         </div>
                     </div>
                     <div class='notMensajesVistos'>
@@ -85,8 +89,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle desconectado'></span>Orlando Moreno</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 1 día</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo}</h5>
                         </div>
                     </div>
                     <div class='notMensajes'>
@@ -95,8 +99,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle conectado'></span>Leider Parada</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 2 días</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo2}</h5>
                         </div>
                     </div>
                     <div class='notMensajesVistos'>
@@ -105,8 +109,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle desconectado'></span>Luis Villamil</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 1 hora</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo4}</h5>
                         </div>
                     </div>
                     <div class='notMensajesVistos'>
@@ -115,8 +119,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle conectado'></span>Pedro Perez</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 20 horas</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo5}</h5>
                         </div>
                     </div>
                     <div class='notMensajes'>
@@ -125,8 +129,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle desconectado'></span>Alison Salazar</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 1 hora</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo}</h5>
                         </div>
                     </div>
                     <div class='notMensajes'>
@@ -135,8 +139,8 @@
                         </div>
                         <div>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle desconectado'></span>Santiago Diaz</strong></h5>
-                            <h5 class='mensajeCorto'>Te ha enviado un mensaje</h5>
-                            <h5 class='tiempoMensaje pull-right'>Hace 10 minutos</h5>
+                            <h5 class='mensajeCorto'>#{msjGestec.men1}</h5>
+                            <h5 class='tiempoMensaje pull-right'>#{msjGestec.tiempo10}</h5>
                         </div>
                     </div>
                 </div>
@@ -161,7 +165,7 @@
                                 </div>
                             </h5>
                             <h5 style='margin-bottom:5px;'><strong><span class='fa fa-circle desconectado'></span>Carlos Sarmiento</strong></h5>
-                            <h5 class='tiempoMensaje'><strong>Última conexión: </strong> Hace 1 día</h5>
+                            <h5 class='tiempoMensaje'><strong>Última conexión: </strong> #{msjGestec.tiempo}</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -280,7 +284,7 @@
 
 
 
-
+            </f:view>
     </ui:define>
     <ui:define name="bottom"></ui:define>
 

@@ -60,13 +60,15 @@
         <ui:include src="#{sesionGestec.dibujarMenu()}"/> 
     </ui:define>
 
-    <ui:define name="titulo"> Citas</ui:define>
+    <ui:define name="titulo"> 
+        <f:view>#{msjGestec.solicitarServicio}</f:view>
+    </ui:define>
     <ui:define name="content">
-
+        <f:view>
         <h:form>
             <div class="row">
                 <div class="col-md-5">
-                    <label for="tipoServicio">Tipo</label>
+                    <label for="tipoServicio">#{msjGestec.tipo}</label>
                     <h:selectOneMenu id="tipoServicio"
                                      class="form-control"
                                      style="margin-top: 0"
@@ -77,7 +79,7 @@
                     </h:selectOneMenu>
                 </div>
                 <div class="col-md-5">
-                    <label for="tipoEquipo">Equipo</label>
+                    <label for="tipoEquipo">#{msjGestec.equipo1}</label>
                     <h:selectOneMenu id="tipoEquipo"
                                      style="margin-top: 0"
                                      class="form-control"
@@ -87,7 +89,7 @@
                     </h:selectOneMenu>
                 </div>
                 <div class="col-md-2">
-                    <label for="cantEquipos">Cant. equipos</label>
+                    <label for="cantEquipos">#{msjGestec.CantEquipo}</label>
                     <h:inputText id="cantEquipos"
                                  class="form-control" 
                                  maxlength="4"
@@ -101,7 +103,7 @@
 
 
 
-            <label for="descripcion">Escriba una breve descripción de su problema</label>
+            <label for="descripcion">#{msjGestec.solicitar1}</label>
             <h:inputText id="descripcion" 
                          class="form-control"
                          maxlength="300"
@@ -112,7 +114,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <label for="fechaCita">¿Qué día desea el servicio?</label>
+                    <label for="fechaCita">#{msjGestec.solicitar2}</label>
                     <h:inputText id="fechaCita"
                                  value="#{citasRequest.nuevaCita.fechaCita}" 
                                  class="form-control"         
@@ -126,7 +128,7 @@
                     <h:message for="fechaCita" style="color:red"  styleClass="error"></h:message>
                 </div>
                 <div class="col-md-4">
-                    <label for="fechaInicio">Desde</label>
+                    <label for="fechaInicio">#{msjGestec.desde}</label>
                     <h:inputText id="fechaInicio"
                                  value="#{citasRequest.horaDisponibilidad.horaInicio}" 
                                  class="form-control"         
@@ -142,7 +144,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="fechafin">Hasta</label>
+                    <label for="fechafin">#{msjGestec.hasta}</label>
                     <h:inputText id="fechaFin"
                                  value="#{citasRequest.horaDisponibilidad.horaFin}" 
                                  class="form-control"
@@ -160,22 +162,22 @@
             
             
 
-            <label class="col-md-12">¿A quién desea enviar la solicitud?</label>
+            <label class="col-md-12">#{msjGestec.solicitar3}</label>
             <h:selectOneRadio id="tecnicos" value="#{citasRequest.tecnicos}"
                               class="col-md-12"
                               styleClass ="radio-inline" enabledClass ="radio-inline">
-                <f:selectItem itemLabel=" Técnicos disponibles" itemValue="1"/>
-                <f:selectItem itemLabel=" Buscar técnico" itemValue="2"/>
-                <f:selectItem itemLabel=" Último técnico" itemValue="3"/>
+                <f:selectItem itemLabel=" #{msjGestec.solicitar4}" itemValue="1"/>
+                <f:selectItem itemLabel=" #{msjGestec.solicitar5}" itemValue="2"/>
+                <f:selectItem itemLabel=" #{msjGestec.solicitar6}" itemValue="3"/>
             </h:selectOneRadio>
 
             
             <div class="row">  
                 <h:commandButton actionListener="#{citasRequest.ingresarCita()}" 
-                                 class="btn btn-primary col-md-3 pull-right" value="Publicar cita"/>
+                                 class="btn btn-primary col-md-3 pull-right" value="#{msjGestec.publicar}"/>
             </div>
         </h:form>
-
+            </f:view>
     </ui:define>
 
     <ui:define name="bottom">

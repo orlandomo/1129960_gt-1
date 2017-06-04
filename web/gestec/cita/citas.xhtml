@@ -4,7 +4,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../../WEB-INF/template/template_principal.xhtml"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="head2">
         #{citasRequest.validarCita()}
@@ -21,19 +22,23 @@
         <ui:include src="#{sesionGestec.dibujarMenu()}"/> 
     </ui:define>
 
-    <ui:define name="titulo"> Citas</ui:define>
+    <ui:define name="titulo"> 
+        <f:view>
+            #{msjGestec.cita}
+        </f:view>
+    </ui:define>
     <ui:define name="content">
-
+        <f:view>
         <div class="col-md-12">
             <div class="col-md-12 novedades">
                 <div class="col-md-12 encabezado_cita">
-                    <h3 style="margin: 0"><strong>Novedades</strong></h3>
+                    <h3 style="margin: 0"><strong>#{msjGestec.novedades}</strong></h3>
                 </div>
 
                 <div class="col-md-12 contenido_cita">
-                    <h5 class="novedad">• Novedad 1</h5>
-                    <h5 class="novedad">• Novedad 2</h5>
-                    <h5 class="novedad">• Novedad 3</h5>
+                    <h5 class="novedad">• #{msjGestec.novedad1}</h5>
+                    <h5 class="novedad">• #{msjGestec.novedad2}</h5>
+                    <h5 class="novedad">• #{msjGestec.novedad3}</h5>
                 </div>
             </div>
             <div class="citas col-md-12" style="padding-right: 0">
@@ -42,12 +47,12 @@
                             <div class="row col-md-12" style="padding-right: 0">
                             <div class="col-md-12 encabezado_cita">
                                 <strong>#{citasRequest.formatearFechaCita(cita.fechaCita)} - #{cita.servicionoTiquet.descripcionServicio}</strong>
-                                <strong class="pull-right"><span class="fa fa-plus"></span> Nuevo</strong>
+                                <strong class="pull-right"><span class="fa fa-plus"></span> #{msjGestec.nuevo}</strong>
                             </div>
                             <div class="col-md-12 contenido_cita">
                                 <div class="row">
                                     <div class="col-md-5 col-sm-10 col-xs-10">
-                                        <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>Dirección: </strong>
+                                        <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>#{msjGestec.direccion}: </strong>
                                             #{cita.solicitudIdsolicitud.direccionidDireccion.tipoVia} 
                                             #{cita.solicitudIdsolicitud.direccionidDireccion.numeroVia}
                                             #{cita.solicitudIdsolicitud.direccionidDireccion.complementoVia} 
@@ -57,19 +62,19 @@
                                             #{cita.solicitudIdsolicitud.direccionidDireccion.complemento}</p>
                                         <br/>
                                         <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12">
-                                            <strong>Contacto: </strong>
+                                            <strong>#{msjGestec.contacto}: </strong>
                                             #{cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.nombreUsuario}
                                             #{cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.apellido}</p>
                                     </div>
                                     <div class="col-md-5 col-sm-10 col-xs-10">
                                         <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                                Tiempo: </strong>#{cita.duracionCita}</p>
+                                                #{msjGestec.citasTiempo}: </strong>#{cita.duracionCita}</p>
                                         <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                                Posible costo: </strong>$ #{cita.servicionoTiquet.costoServicio}</p>
+                                                #{msjGestec.citasPosibleCosto}: </strong>$ #{cita.servicionoTiquet.costoServicio}</p>
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-2">
                                         <div class="tiquet">
-                                            <strong><center>No. tiquet</center></strong>
+                                            <strong><center>#{msjGestec.citasNoTiquet}</center></strong>
                                             <p style="text-align: center;margin: 0">#{cita.servicionoTiquet.noTiquet}</p>
                                         </div>
                                     </div>
@@ -84,12 +89,12 @@
                                 </div>
 
 
-                                <h:commandLink id="botonValidar" class="btn btn-info" value="Ver detalle" action="#{citasRequest.verDetalle(cita)}"
+                                <h:commandLink id="botonValidar" class="btn btn-info" value="#{msjGestec.citasDetalle}" action="#{citasRequest.verDetalle(cita)}"
                                                  ></h:commandLink>
                                 <div class="pull-right">
-                                    <h:commandButton class="btn btn-danger" value="Cancelar cita" action="#{citasRequest.cancelarCita(cita)}"></h:commandButton>
+                                    <h:commandButton class="btn btn-danger" value="#{msjGestec.citasCancelar}" action="#{citasRequest.cancelarCita(cita)}"></h:commandButton>
                                     <h:commandLink class="btn btn-primary" 
-                                                   value="Modificar" action="#{citasRequest.editar(cita)}">
+                                                   value="#{msjGestec.citasModificar}" action="#{citasRequest.editar(cita)}">
                                     </h:commandLink>
                                 </div>
                             </div>
@@ -100,7 +105,7 @@
                 </h:form>
             </div>
         </div>
-
+            </f:view>
     </ui:define>
 
     <ui:define name="bottom">

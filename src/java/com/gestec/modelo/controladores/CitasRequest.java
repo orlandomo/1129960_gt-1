@@ -31,12 +31,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 /**
  *
  * @author michael
  */
-@ManagedBean(name = "citasRequest")
+@Named(value="citasRequest")
 @SessionScoped
 public class CitasRequest implements Serializable {
 
