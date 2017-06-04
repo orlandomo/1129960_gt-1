@@ -38,6 +38,7 @@ import javax.inject.Named;
  * @author michael
  */
 @Named(value="citasRequest")
+@ManagedBean(name =  "citasRequest")
 @SessionScoped
 public class CitasRequest implements Serializable {
 

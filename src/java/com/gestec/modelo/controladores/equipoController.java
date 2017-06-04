@@ -79,8 +79,9 @@ public class equipoController {
         return "datosEquipo";
     }
 
-    public void eliminarEquipo() {
-        this.efl.remove(this.e);
+    public String eliminarEquipo() {
+        efl.remove(this.e);
+        return "/faces/gestec/equipo/listaEquipos";
         
     }
 
