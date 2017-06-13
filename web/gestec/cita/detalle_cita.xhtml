@@ -4,8 +4,9 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
-                template="./../../WEB-INF/template/template_principal.xhtml">
-<!--hgghffhghgfgcgfgf-->
+                template="./../../WEB-INF/template/template_principal.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <ui:define name="head2">
         <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
         <link rel="stylesheet" href="#{request.contextPath}/resources/css/admin.css"/>
@@ -41,7 +42,16 @@
         </style>
     </ui:define>
 
-    <ui:define name="titulo">Detalle cita</ui:define>
+    <ui:define name="titulo">
+        <c:if test="#{citasRequest.cita.estadoCita=='Solicitado'}">
+            Responder solicitud
+        </c:if>
+        <c:if test="#{citasRequest.cita.estadoCita=='Agendada'}">
+            Detalle cita 
+            #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.nombreUsuario}
+            #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.apellido}
+        </c:if>
+    </ui:define>
 
     <ui:define name="menu">
         <ui:include src="#{sesionGestec.dibujarMenu()}"/>
@@ -50,152 +60,264 @@
 
     <ui:define name="content">
 
-        <h:form prependId="false">
+        <c:if test="#{citasRequest.cita.estadoCita=='Agendada'}">
+            <h:form prependId="false">
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-md-4" style="margin-bottom: 15px">
+                    <div class="col-md-4" style="margin-bottom: 15px">
 
-                    <div class="col-md-12 encabezado_cita" style="margin: 0">
-                        <strong>#{citasRequest.formatearFechaCita(citasRequest.cita.fechaCita)}</strong>
-                        <strong class="pull-right"><span class="fa fa-plus"></span> Nuevo</strong>
-                    </div>
-                    <div class="col-md-12 contenido_cita">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-2 col-xs-2" style="margin-bottom:20px;">
-                                <div class="tiquet">
-                                    <strong><center>No. tiquet</center></strong>
-                                    <p style="text-align: center;margin: 0">#{citasRequest.cita.servicionoTiquet.noTiquet}</p>
+                        <div class="col-md-12 encabezado_cita" style="margin: 0">
+                            <strong>#{citasRequest.formatearFechaCita(citasRequest.cita.fechaCita)}</strong>
+                            <strong class="pull-right"><span class="fa fa-plus"></span> Nuevo</strong>
+                        </div>
+                        <div class="col-md-12 contenido_cita">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-2 col-xs-2" style="margin-bottom:20px;">
+                                    <div class="tiquet">
+                                        <strong><center>No. tiquet</center></strong>
+                                        <p style="text-align: center;margin: 0">#{citasRequest.cita.servicionoTiquet.noTiquet}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-10 col-xs-10">
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>Dirección: </strong>
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.tipoVia} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroVia}
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complementoVia} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroVia2} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complementoVia2}-
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroCasa} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complemento}</p>
+                                    <br/>
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12">
+                                        <strong>Contacto: </strong>
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.nombreUsuario}
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.apellido}</p>
+                                </div>
+                                <div class="col-md-12 col-sm-10 col-xs-10">
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Tiempo: </strong>#{citasRequest.cita.duracionCita}</p>
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Posible costo: </strong>$ #{citasRequest.cita.servicionoTiquet.costoServicio}</p>
+                                </div>
+                                <div class="col-md-12 col-sm-10 col-xs-10">
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Estado: </strong>#{citasRequest.cita.estadoCita}</p>
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Garantía: </strong>#{citasRequest.formatearFechaCita(citasRequest.cita.servicionoTiquet.garantia)}</p>
+                                </div>
+                                <div class="col-md-12 col-sm-10 col-xs-10">
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Descripción: </strong>#{citasRequest.cita.servicionoTiquet.descripcionServicio}</p>
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Equipos: </strong></p>
+                                    <c:forEach items="#{citasRequest.cita.servicionoTiquet.relequiposervicioList}" var="lo">
+                                        <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            </strong>#{lo.equipoidEquipo.tipoEquipo} #{lo.equipoidEquipo.marcaEquipo}</p>
+                                    </c:forEach>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-sm-10 col-xs-10">
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>Dirección: </strong>
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.tipoVia} 
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroVia}
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complementoVia} 
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroVia2} 
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complementoVia2}-
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroCasa} 
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complemento}</p>
-                                <br/>
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12">
-                                    <strong>Contacto: </strong>
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.nombreUsuario}
-                                    #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.apellido}</p>
+                        </div>
+                        <h:link outcome="citas" class="btn btn-danger col-md-12" value="Volver" style="margin-top: 10px;"></h:link>
+                    </div>
+
+
+                    <div class="col-md-8 col-sm-12 col-xs-12 cabecera-mensajes">
+                        <div class="opciones-mensaje col-md-12" style="padding-top:9px">
+                            <div class='notMensajesVistos' style="border:none">
+                                <div class='notificacionMensaje'>
+                                    <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
+                                </div>
+                                <div>
+                                    <h5 class='mensajeCorto pull-right'>
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle fa fa-ellipsis-v" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Acciones" style="border:none">
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li><a href="#" class="eliminarConversacion"><span class="fa fa-trash-o"></span> Eliminar conversación</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="#"><span class="fa fa-ban"></span> Bloquear usuario</a></li>
+                                            </ul>
+                                        </div>
+                                    </h5>
+
+                                    <h:commandLink class="enlace-perfil" actionListener="#{sesionGestec.verPerfil(citasRequest.obtenerContacto())}">
+                                        <strong>#{citasRequest.contacto()}</strong>
+                                    </h:commandLink>
+                                    <!--<h5 class='tiempoMensaje'><strong>Última conexión: </strong> Hace 1 día</h5>-->
+                                </div>
                             </div>
-                            <div class="col-md-12 col-sm-10 col-xs-10">
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                        Tiempo: </strong>#{citasRequest.cita.duracionCita}</p>
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                        Posible costo: </strong>$ #{citasRequest.cita.servicionoTiquet.costoServicio}</p>
+                            <div class="row">
+                                <a href="#responder" class="btn btn-primary col-md-6 col-sm-6 col-xs-12"><span class="fa fa-commenting-o"></span> &nbsp;Escribir</a><button class="btn btn-danger col-md-6 col-sm-6 col-xs-12" id="eliminar"><span class="fa fa-trash"> </span>&nbsp; Eliminar mensajes seleccionados</button>
                             </div>
-                            <div class="col-md-12 col-sm-10 col-xs-10">
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                        Estado: </strong>#{citasRequest.cita.estadoCita}</p>
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                        Garantía: </strong>#{citasRequest.formatearFechaCita(citasRequest.cita.servicionoTiquet.garantia)}</p>
-                            </div>
-                            <div class="col-md-12 col-sm-10 col-xs-10">
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                        Descripción: </strong>#{citasRequest.cita.servicionoTiquet.descripcionServicio}</p>
-                                <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                        Equipos: </strong></p>
-                                <c:forEach items="#{citasRequest.cita.servicionoTiquet.relequiposervicioList}" var="lo">
-                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
-                                        </strong>#{lo.equipoidEquipo.tipoEquipo} #{lo.equipoidEquipo.marcaEquipo}</p>
-                                </c:forEach>
+                        </div>
+                        <div class="col-md-12 conversaciones" style="padding-left: 15px;padding-right: 15px;padding-bottom: 15px">
+
+                            <table id="table" class="table" data-toggle="table" data-sort-name="Numero" data-show-header="false" formatNoMatches="dsdsds">
+                                <thead>
+                                    <tr>
+                                        <th data-field="check" data-checkbox="true"></th>
+                                        <th data-field="mensaje" data-align="left">No. Ticket</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="#{citasRequest.mensajes(citasRequest.cita)}" var="mns">       
+                                        <tr>
+                                            <td data-width="200px"></td>
+                                            <td>
+                                                <div class='notMensajesVistos' style="border:none">
+                                                    <div class='notificacionMensaje'>
+                                                        <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
+                                                    </div>
+                                                    <div>
+                                                        <h5><strong><span class='fa fa-circle desconectado'></span>
+                                                                <a href="" class="enlace-perfil">#{mns.usuariosidUsuario.nombreUsuario} 
+                                                                    #{mns.usuariosidUsuario.apellido}</a></strong></h5>
+                                                        <h5 class='mensajeCorto' style="padding:15px;background:#2895cc;color:#fff;border-radius: 0 10px 0 10px;margin-top:5px">#{mns.mensaje}</h5>
+                                                        <h5 class='tiempoMensaje pull-right'>#{citasRequest.formatearFechaCita(mns.fechaMensaje)}</h5>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div class='notMensajesVistos' style="border:none">
+                                                    #{sesionGestec.usuario.nombreUsuario} 
+                                                    #{sesionGestec.usuario.apellido}
+                                                    <div>
+                                                        <h5 class='mensajeCorto pull-right' style="padding:15px;background:#ddd;border-radius: 10px 0 10px 0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero voluptates pariatur tempora consequatur repellat cupiditate voluptatibus molestiae voluptate quod sint.</h5>
+                                                        <h5 class='tiempoMensaje pull-right'>21/10/2017</h5>
+                                                    </div>
+                                                    <div class='notificacionMensaje'>
+                                                        <img src='#{request.contextPath}/resources/img/tecnico4.png' alt='' class='imagenNotificacion pull-right'/>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12" style="padding:0">
+                                <textarea id="responder" class="form-control" rows="3">
+                                </textarea>
+                                <button class="btn btn-success pull-right col-md-3" style="margin-top:5px"> Enviar</button>
                             </div>
                         </div>
                     </div>
-                    <h:link outcome="citas" class="btn btn-danger col-md-12" value="Volver" style="margin-top: 10px;"></h:link>
                 </div>
+            </h:form>
+        </c:if>
 
+        <c:if test="#{citasRequest.cita.estadoCita=='Solicitado'}">
 
-                <div class="col-md-8 col-sm-12 col-xs-12 cabecera-mensajes">
-                    <div class="opciones-mensaje col-md-12" style="padding-top:9px">
-                        <div class='notMensajesVistos' style="border:none">
-                            <div class='notificacionMensaje'>
-                                <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
-                            </div>
-                            <div>
-                                <h5 class='mensajeCorto pull-right'>
-                                    <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle fa fa-ellipsis-v" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" title="Acciones" style="border:none">
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a href="#" class="eliminarConversacion"><span class="fa fa-trash-o"></span> Eliminar conversación</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="#"><span class="fa fa-ban"></span> Bloquear usuario</a></li>
-                                        </ul>
+            <h:form prependId="false">
+
+                <div class="row">
+
+                    <div class="col-md-4" style="margin-bottom: 15px">
+
+                        <div class="col-md-12 encabezado_cita" style="margin: 0">
+                            <strong>#{citasRequest.formatearFechaCita(citasRequest.cita.fechaCita)}</strong>
+                            <strong class="pull-right"><span class="fa fa-plus"></span> Nuevo</strong>
+                        </div>
+                        <div class="col-md-12 contenido_cita">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-2 col-xs-2" style="margin-bottom:20px;">
+                                    <div class="tiquet">
+                                        <strong><center>No. tiquet</center></strong>
+                                        <p style="text-align: center;margin: 0">#{citasRequest.cita.servicionoTiquet.noTiquet}</p>
                                     </div>
-                                </h5>
-
-                                <h:commandLink class="enlace-perfil" actionListener="#{sesionGestec.verPerfil(citasRequest.obtenerContacto())}">
-                                    <strong>#{citasRequest.contacto()}</strong>
-                                </h:commandLink>
-                                <!--<h5 class='tiempoMensaje'><strong>Última conexión: </strong> Hace 1 día</h5>-->
+                                </div>
+                                <div class="col-md-12 col-sm-10 col-xs-10">
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>Dirección: </strong>
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.tipoVia} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroVia}
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complementoVia} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroVia2} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complementoVia2}-
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.numeroCasa} 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.complemento}</p>
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>Ubicación </strong>
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.idBarrio.idLocalidad.nombreLocalidad}
+                                        barrio 
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.idBarrio.nombreBarrio}</p>
+                                    <br/>
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12">
+                                        <strong>Contacto: </strong>
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.nombreUsuario}
+                                        #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.apellido}</p>
+                                </div>
+                                <div class="col-md-12 col-sm-10 col-xs-10">
+                                    <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Descripción: </strong>#{citasRequest.cita.eventoAgenda.descripcionEvento}</p>
+                                    <img src="#{request.contextPath}/faces/resources/img/reparacion.jpg" 
+                                         class="col-md-12"/>
+                                    <p style="text-align: left;margin-top: 10px;" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            Equipos: </strong></p>
+                                    <c:forEach items="#{citasRequest.cita.servicionoTiquet.relequiposervicioList}" var="lo">
+                                        <p style="text-align: left" class="pull-left col-md-12 col-sm-12 col-xs-12"><strong>
+                                            </strong>#{lo.equipoidEquipo.tipoEquipo} #{lo.equipoidEquipo.marcaEquipo}</p>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <a href="#responder" class="btn btn-primary col-md-6 col-sm-6 col-xs-12"><span class="fa fa-commenting-o"></span> &nbsp;Escribir</a><button class="btn btn-danger col-md-6 col-sm-6 col-xs-12" id="eliminar"><span class="fa fa-trash"> </span>&nbsp; Eliminar mensajes seleccionados</button>
-                        </div>
                     </div>
-                    <div class="col-md-12 conversaciones" style="padding-left: 15px;padding-right: 15px;padding-bottom: 15px">
 
-                        <table id="table" class="table" data-toggle="table" data-sort-name="Numero" data-show-header="false" formatNoMatches="dsdsds">
-                            <thead>
-                                <tr>
-                                    <th data-field="check" data-checkbox="true"></th>
-                                    <th data-field="mensaje" data-align="left">No. Ticket</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="#{citasRequest.mensajes(citasRequest.cita)}" var="mns">       
-                                    <tr>
-                                        <td data-width="200px"></td>
-                                        <td>
-                                            <div class='notMensajesVistos' style="border:none">
-                                                <div class='notificacionMensaje'>
-                                                    <img src='#{request.contextPath}/resources/img/tecnico1.jpg' alt='' class='imagenNotificacion'/>
-                                                </div>
-                                                <div>
-                                                    <h5><strong><span class='fa fa-circle desconectado'></span>
-                                                            <a href="" class="enlace-perfil">#{mns.usuariosidUsuario.nombreUsuario} 
-                                                                #{mns.usuariosidUsuario.apellido}</a></strong></h5>
-                                                    <h5 class='mensajeCorto' style="padding:15px;background:#2895cc;color:#fff;border-radius: 0 10px 0 10px;margin-top:5px">#{mns.mensaje}</h5>
-                                                    <h5 class='tiempoMensaje pull-right'>#{citasRequest.formatearFechaCita(mns.fechaMensaje)}</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <div class='notMensajesVistos' style="border:none">
-                                                #{sesionGestec.usuario.nombreUsuario} 
-                                                #{sesionGestec.usuario.apellido}
-                                                <div>
-                                                    <h5 class='mensajeCorto pull-right' style="padding:15px;background:#ddd;border-radius: 10px 0 10px 0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero voluptates pariatur tempora consequatur repellat cupiditate voluptatibus molestiae voluptate quod sint.</h5>
-                                                    <h5 class='tiempoMensaje pull-right'>21/10/2017</h5>
-                                                </div>
-                                                <div class='notificacionMensaje'>
-                                                    <img src='#{request.contextPath}/resources/img/tecnico4.png' alt='' class='imagenNotificacion pull-right'/>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <div class="col-md-12" style="padding:0">
-                            <textarea id="responder" class="form-control" rows="3">
-                            </textarea>
-                            <button class="btn btn-success pull-right col-md-3" style="margin-top:5px"> Enviar</button>
-                        </div>
+
+
+                    <div class="col-md-8">
+                        <f:view>
+                            <h2><strong><center>#{msjGestec.citasDatosServicio}</center></strong></h2>
+                            <hr style="margin: 0"/>
+
+                            <p class="col-md-12" style="color: #2895cc">Esta solicitud fue realizada por #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.nombreUsuario}
+                                #{citasRequest.cita.solicitudIdsolicitud.direccionidDireccion.usuariosidUsuario.apellido}
+                                . Si desea agendar una cita con este usuario llene el formulario de servicio con la respuesta a su petición.</p>
+
+                            <h:form id="sddssd" prependId="false">
+
+                                <div class="form-group col-md-6">
+                                    <label for="nombre">#{msjGestec.citasDuracion} </label>
+                                    <h:inputText id="nombre" class="form-control" value="#{citasRequest.citaModificada.duracionCita}"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="apellido">#{msjGestec.citasCosto} </label>
+                                    <h:inputText id="apellido" class="form-control" value="#{citasRequest.citaModificada.servicionoTiquet.costoServicio}"/>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="descripcion">#{msjGestec.citasDescripcion} </label>
+                                    <h:inputText id="descripcion" class="form-control" value="#{citasRequest.citaModificada.servicionoTiquet.descripcionServicio}"/>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="fecha">Fecha en la que desea prestar el servicio </label>
+                                    <h:inputText id="fecha" class="form-control" 
+                                                 value="#{citasRequest.citaModificada.servicionoTiquet.descripcionServicio}">
+                                        <f:convertDateTime pattern="yyyy-MM-dd hh:mm"/>
+                                    </h:inputText>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="col-md-6" style="padding: 0 5px 0 0">
+                                        <h:commandLink value="Cancelar cita" class="btn btn-danger col-md-12" 
+                                                       ></h:commandLink>
+                                    </div>
+                                    <div class="col-md-6" style="padding: 0 0 0 5px">
+                                        <h:commandLink value="Enviar datos" class="btn btn-primary col-md-12"
+                                                       action="#{citasRequest.actualizarCita()}"></h:commandLink>
+                                    </div>
+                                </div>
+
+
+                            </h:form>
+                        </f:view>
                     </div>
+
                 </div>
-            </div>
-        </h:form>
+            </h:form>
+        </c:if>
+
+
     </ui:define>
     <ui:define name="bottom"></ui:define>
 

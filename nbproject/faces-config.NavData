@@ -11,8 +11,8 @@
         <Node id="resources/plugins/tableExport/test/singleExcel_1.html" x="1650" y="450" zoom="true"/>
         <Node id="gestec/cita/shedule.xhtml" x="900" y="450" zoom="true"/>
         <Node id="index.xhtml" x="900" y="750" zoom="true"/>
-        <Node id="resources/plugins/tableExport/test/multipleExcel_1.html" x="900" y="300" zoom="true"/>
         <Node id="resources/plugins/tableExport/test/bootstrap_2.html" x="650" y="1050" zoom="true"/>
+        <Node id="resources/plugins/tableExport/test/multipleExcel_1.html" x="900" y="300" zoom="true"/>
         <Node id="gestec/usuario/form_perfil_tecnico.xhtml" x="400" y="1050" zoom="true"/>
         <Node id="resources/plugins/tableExport/test/sidebyside_1.html" x="650" y="150" zoom="true"/>
         <Node id="gestec/usuario/admin.xhtml" x="900" y="600" zoom="true"/>
@@ -22,8 +22,8 @@
         <Node id="resources/plugins/tableExport/test/singleExcel.html" x="1150" y="600" zoom="true"/>
         <Node id="resources/plugins/tableExport/test/sidebyside.html" x="150" y="1200" zoom="true"/>
         <Node id="gestec/usuario/form_tecnico_empresa.xhtml" x="650" y="900" zoom="true"/>
-        <Node id="resources/plugins/tableExport/test/multipleExcel_2.html" x="400" y="450" zoom="true"/>
         <Node id="resources/plugins/tableExport/test/bootstrap_1.html" x="150" y="300" zoom="true"/>
+        <Node id="resources/plugins/tableExport/test/multipleExcel_2.html" x="400" y="450" zoom="true"/>
         <Node id="resources/plugins/tableExport/test/sidebyside_2.html" x="1150" y="750" zoom="true"/>
         <Node id="gestec/usuario/editar_perfil.xhtml" x="650" y="750" zoom="true"/>
         <Node id="gestec/usuario/perfil_externo.xhtml" x="400" y="600" zoom="true"/>

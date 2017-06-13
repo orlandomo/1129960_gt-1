@@ -6,9 +6,11 @@
 package com.gestec.modelo.persistencia;
 
 import com.gestec.modelo.entidades.Mensaje;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +29,13 @@ public class MensajeFacade extends AbstractFacade<Mensaje> implements MensajeFac
 
     public MensajeFacade() {
         super(Mensaje.class);
+    }
+
+    @Override
+    public List<Mensaje> listarMensajesUsuario(Integer idUsuario) {
+        TypedQuery<Mensaje> q = getEntityManager().createNamedQuery("Mensaje.findByIdUsuario", Mensaje.class);
+        q.setParameter("idUsuario", idUsuario);
+        return q.getResultList();
     }
     
 }

@@ -370,13 +370,14 @@
                         <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 0">
                             <a href="#{request.contextPath}/faces/gestec/usuario/perfil.xhtml" class="btn btn-default col-md-12 col-sm-12 col-xs-12">Volver</a>
                         </div>
-
+                        <div class="col-md-6 col-sm-6 col-xs-6" style="padding-right: 0">
+                            <h:commandButton class="btn btn-primary col-md-12 col-sm-12 col-xs-12"
+                                             value="Guardar cambios" actionListener="#{sesionGestec.irAlInicio()}"/>
+                        </div>
 
                     </div>
                 </div>
 
-                <h:commandButton class="btn btn-primary col-md-12 col-sm-12 col-xs-12"
-                                 value="Guardar cambios" actionListener="#{sesionGestec.irAlInicio()}"/>
             </div> 
         </h:form>
 

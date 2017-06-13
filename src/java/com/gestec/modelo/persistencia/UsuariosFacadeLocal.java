@@ -32,4 +32,6 @@ public interface UsuariosFacadeLocal {
     
     Usuarios iniciarSesion(String nombreUsuario, String clave);
     
+    List<Usuarios> listarTecnicos();
+    
 }

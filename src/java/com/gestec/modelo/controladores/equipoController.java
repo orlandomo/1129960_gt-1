@@ -3,6 +3,7 @@ package com.gestec.modelo.controladores;
 import com.gestec.modelo.entidades.Equipo;
 import com.gestec.modelo.persistencia.EquipoFacadeLocal;
 import com.gestec.modelo.persistencia.EquipoFacade;
+import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.util.List;
@@ -11,7 +12,7 @@ import javax.ejb.EJB;
 
 @Named(value = "equipoController")
 @SessionScoped
-public class equipoController {
+public class equipoController implements Serializable{
 
     @EJB
     EquipoFacadeLocal efl;

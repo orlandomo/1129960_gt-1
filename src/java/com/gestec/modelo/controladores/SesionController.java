@@ -8,6 +8,7 @@ package com.gestec.modelo.controladores;
 import com.gestec.modelo.entidades.Barrio;
 import com.gestec.modelo.entidades.Contactos;
 import com.gestec.modelo.entidades.Localidad;
+import com.gestec.modelo.entidades.Mensaje;
 import com.gestec.modelo.entidades.NotificacionCita;
 import com.gestec.modelo.entidades.NotificacionUsuario;
 import com.gestec.modelo.entidades.Relcalificacionusuarios;
@@ -15,6 +16,7 @@ import com.gestec.modelo.entidades.Usuarios;
 import com.gestec.modelo.persistencia.BarrioFacadeLocal;
 import com.gestec.modelo.persistencia.ContactosFacadeLocal;
 import com.gestec.modelo.persistencia.LocalidadFacadeLocal;
+import com.gestec.modelo.persistencia.MensajeFacadeLocal;
 import com.gestec.modelo.persistencia.NotificacionCitaFacadeLocal;
 import com.gestec.modelo.persistencia.NotificacionUsuarioFacadeLocal;
 import com.gestec.modelo.persistencia.UsuariosFacadeLocal;
@@ -46,6 +48,8 @@ public class SesionController implements Serializable {
     @EJB
     private UsuariosFacadeLocal ufl;
     @EJB
+    private MensajeFacadeLocal mfl;
+    @EJB
     private LocalidadFacadeLocal lfl;
     @EJB
     private BarrioFacadeLocal bfl;
@@ -61,37 +65,34 @@ public class SesionController implements Serializable {
     private List<Localidad> localidades;
     private List<String> barriosLocalidades;
     List<NotificacionUsuario> notificaciones;
-    List<NotificacionCita> notificacionesCita;
     private Integer numeroLocalidad;
     private List<Barrio> barrios;
     private List<String> nombreBarrios;
     private Usuarios perfil;
     private Usuarios usuario;
     private Contactos contacto;
-    
+    private List<NotificacionCita> notCitas;
+
     private Locale idiomaSeleccionado;
     private List<Locale> idiomasSoportados;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         this.contacto = new Contactos();
         this.localidades = lfl.findAll();
         this.barrios = bfl.findAll();
-        this.notificaciones = nfl.findAll();
-        this.notificacionesCita = ncfl.findAll();
-        
-        FacesContext fc= FacesContext.getCurrentInstance();
-        idiomaSeleccionado=new Locale("es");
-        
-        idiomasSoportados= new ArrayList<>();
-        Iterator<Locale> it=fc.getApplication().getSupportedLocales();
-        while (it.hasNext()){
+        this.notCitas = ncfl.findAll();
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        idiomaSeleccionado = new Locale("es");
+
+        idiomasSoportados = new ArrayList<>();
+        Iterator<Locale> it = fc.getApplication().getSupportedLocales();
+        while (it.hasNext()) {
             idiomasSoportados.add(it.next());
         }
-        
+
     }
-    
-    
 
     public Locale getIdiomaSeleccionado() {
         return idiomaSeleccionado;
@@ -108,9 +109,7 @@ public class SesionController implements Serializable {
     public void setIdiomasSoportados(List<Locale> idiomasSoportados) {
         this.idiomasSoportados = idiomasSoportados;
     }
-     
-     
-    
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -149,7 +148,7 @@ public class SesionController implements Serializable {
 
     public void setLocalidades(List<Localidad> localidades) {
         this.localidades = localidades;
-    }  
+    }
 
     public List<Barrio> getBarrios() {
         return barrios;
@@ -191,12 +190,45 @@ public class SesionController implements Serializable {
         this.notificaciones = notificaciones;
     }
 
-    public List<NotificacionCita> getNotificacionesCita() {
-        return notificacionesCita;
+    public List<NotificacionCita> getNotificacionesCitaUsuario() {
+        this.notCitas = ncfl.findAll();
+        List<NotificacionCita> nots = new ArrayList<>();
+        for (NotificacionCita not : this.notCitas) {
+            if (not.getIdCita().getSolicitudIdsolicitud().getMensajeList().size() > 0) {
+                List<Mensaje> mensajes = mfl.listarMensajesUsuario(not.getIdCita().getSolicitudIdsolicitud().getMensajeList().get(0).getUsuariosidUsuario().getIdUsuario());
+                if (mensajes.get(0).getUsuariosidUsuario().getIdUsuario().equals(getUsuario().getIdUsuario())) {
+                    nots.add(not);
+                }
+            }
+        }
+        this.notCitas = nots;
+        return this.notCitas;
     }
 
-    public void setNotificacionesCita(List<NotificacionCita> notificacionesCita) {
-        this.notificacionesCita = notificacionesCita;
+    public Integer getCantidadNotificaciones() {
+        Integer cantidad = 0;
+        this.notificaciones = nfl.listarMisNotificaciones(getUsuario().getIdUsuario());
+        for (NotificacionCita not : getNotificacionesCitaUsuario()) {
+            if (not.getEstadoNotificacion().equals("Enviado")) {
+                cantidad++;
+            }
+        }
+        for (NotificacionUsuario notUsu : this.notificaciones) {
+            if (notUsu.getEstadoNotificacion().equals("Enviado")) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+    }
+
+    public Boolean validarCantNotificaciones() {
+        return getNotificacionesCitaUsuario().isEmpty() && getUsuario().getNotificacionUsuarioList().isEmpty();
+    }
+
+    public String formatearFechaNotificacion(Date fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("MMMM dd 'de' yyyy 'a las' hh:mm", new Locale("es", "CO"));
+        String fechaFormato = formato.format(fecha);
+        return fechaFormato;
     }
 
     public String iniciarSesion() {
@@ -253,7 +285,7 @@ public class SesionController implements Serializable {
     public void verPerfil(Usuarios perfil) {
         setPerfil(perfil);
         redireccionar("/faces/gestec/usuario/perfil_externo.xhtml?faces-redirect=true");
-    } 
+    }
 
     public String formatearFecha(Date fecha) {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd", new Locale("es", "CO"));
@@ -264,7 +296,7 @@ public class SesionController implements Serializable {
             return fechaF;
         }
     }
-    
+
     public String formatearFechaCumpleaños() {
         SimpleDateFormat formato = new SimpleDateFormat("dd 'de' MMMM", new Locale("es", "CO"));
         String fechaF = formato.format(getUsuario().getFechaNacimiento());
@@ -344,12 +376,12 @@ public class SesionController implements Serializable {
             Logger.getLogger(SesionController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void cambiarIdioma(Locale nuevoIdioma){
-        this.idiomaSeleccionado=nuevoIdioma;
+
+    public void cambiarIdioma(Locale nuevoIdioma) {
+        this.idiomaSeleccionado = nuevoIdioma;
         FacesContext.getCurrentInstance().getViewRoot().setLocale(this.idiomaSeleccionado);
     }
-    
+
     public String dibujarMenu() {
         validaSesion();
         String rol = getUsuario().getTipoUsuario();
@@ -365,6 +397,7 @@ public class SesionController implements Serializable {
         }
         return null;
     }
+
     public void irAlInicio() {
         String rol = getUsuario().getTipoUsuario();
         switch (rol) {
@@ -378,48 +411,55 @@ public class SesionController implements Serializable {
                 break;
         }
     }
-    
-    public void bloquearCliente(){
+
+    public void bloquearCliente() {
         String rol = getUsuario().getTipoUsuario();
         if (rol.equals("Cliente")) {
             redireccionar("/faces/gestec/error/error500.xhtml?faces-redirect=true");
         }
     }
-    
-    public void bloquearTecnico(){
+
+    public void bloquearTecnico() {
         String rol = getUsuario().getTipoUsuario();
         if (rol.equals("Tecnico")) {
             redireccionar("/faces/gestec/error/error500.xhtml?faces-redirect=true");
         }
     }
-    
-    public void bloquearAdmin(){
+
+    public void bloquearAdmin() {
         String rol = getUsuario().getTipoUsuario();
         if (rol.equals("Administrador")) {
             redireccionar("/faces/gestec/error/error500.xhtml?faces-redirect=true");
         }
     }
-    
-    public String agregarContacto(Usuarios usuario, Usuarios contacto){   
+
+    public String agregarContacto(Usuarios usuario, Usuarios contacto) {
         getContacto().setIdContacto(usuario);
         getContacto().setIdUsuario(contacto);
         cfl.create(this.contacto);
         return "";
     }
-    
-    public void editarUsuario(){     
+
+    public void editarUsuario() {
         ufl.edit(usuario);
         redireccionar("faces/index.xhtml?faces-redirect=true");
     }
 
-    public void llenarBarrios(AjaxBehaviorEvent event){ 
-        Localidad barriosLocalidad = lfl.llenarBarriosLocalidad(getNumeroLocalidad());
-        List<Barrio> barrios = barriosLocalidad.getBarrioList();
-        this.nombreBarrios = new ArrayList<>();
-        
-        for (Barrio barrio : barrios) {
-            nombreBarrios.add(barrio.getNombreBarrio());
+    public void llenarBarrios(AjaxBehaviorEvent event) {
+        if (getNumeroLocalidad() < 21 && getNumeroLocalidad() > 0) {
+            Localidad barriosLocalidad = lfl.llenarBarriosLocalidad(getNumeroLocalidad());
+            List<Barrio> barrios = barriosLocalidad.getBarrioList();
+            this.nombreBarrios = new ArrayList<>();
+
+            for (Barrio barrio : barrios) {
+                nombreBarrios.add(barrio.getNombreBarrio());
+
+            }
+        } else {
+            nombreBarrios = new ArrayList<>();
+            nombreBarrios.add("Cualquier barrio");
         }
+
     }
-    
+
 }

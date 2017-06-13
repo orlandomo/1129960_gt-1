@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "NotificacionUsuario.findAll", query = "SELECT n FROM NotificacionUsuario n"),
     @NamedQuery(name = "NotificacionUsuario.findByIdNotificacionUsuario", query = "SELECT n FROM NotificacionUsuario n WHERE n.idNotificacionUsuario = :idNotificacionUsuario"),
     @NamedQuery(name = "NotificacionUsuario.findByEstadoNotificacion", query = "SELECT n FROM NotificacionUsuario n WHERE n.estadoNotificacion = :estadoNotificacion"),
+    @NamedQuery(name = "NotificacionUsuario.findByIdUsuario", query = "SELECT n FROM NotificacionUsuario n WHERE n.idUsuario.idUsuario = :idUsuario"),
     @NamedQuery(name = "NotificacionUsuario.findByFechaNotificacion", query = "SELECT n FROM NotificacionUsuario n WHERE n.fechaNotificacion = :fechaNotificacion")})
 public class NotificacionUsuario implements Serializable {
 

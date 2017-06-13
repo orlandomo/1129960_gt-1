@@ -6,6 +6,8 @@
 package com.gestec.modelo.persistencia;
 
 import com.gestec.modelo.entidades.Usuarios;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -42,6 +44,15 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
             ex.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Usuarios> listarTecnicos() {
+        List<Usuarios> tecnicos;
+        TypedQuery<Usuarios> q = getEntityManager().createNamedQuery("Usuarios.findByTipoUsuario", Usuarios.class);
+        q.setParameter("tipoUsuario", "Tecnico");
+        tecnicos = q.getResultList();
+        return tecnicos;
     }
     
 }

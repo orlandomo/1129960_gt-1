@@ -30,4 +30,6 @@ public interface NotificacionUsuarioFacadeLocal {
 
     int count();
     
+    List<NotificacionUsuario> listarMisNotificaciones(Integer idUsuario);
+    
 }

@@ -6,9 +6,11 @@
 package com.gestec.modelo.persistencia;
 
 import com.gestec.modelo.entidades.Citas;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +29,13 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
 
     public CitasFacade() {
         super(Citas.class);
+    }
+
+    @Override
+    public List<Citas> listarCitas() {
+        TypedQuery<Citas> q = getEntityManager().createNamedQuery("Citas.findByEstadoCita", Citas.class);
+        q.setParameter("estadoCita", "Agendada");
+        return q.getResultList();
     }
     
 }

@@ -30,4 +30,6 @@ public interface MensajeFacadeLocal {
 
     int count();
     
+    List<Mensaje> listarMensajesUsuario(Integer idUsuario);
+    
 }

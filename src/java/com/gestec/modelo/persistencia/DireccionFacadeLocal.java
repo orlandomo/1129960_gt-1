@@ -30,4 +30,6 @@ public interface DireccionFacadeLocal {
 
     int count();
     
+    List<Direccion> buscarPorBarrio(Integer idBarrio);
+    
 }

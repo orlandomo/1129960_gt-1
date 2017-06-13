@@ -77,8 +77,6 @@ public class Eventoagenda implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "tipoEvento")
     private String tipoEvento;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "eventoAgenda")
-    private Citas citas;
     @JoinColumn(name = "usuarios_idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)
     private Usuarios usuariosidUsuario;
@@ -146,14 +144,6 @@ public class Eventoagenda implements Serializable {
 
     public void setTipoEvento(String tipoEvento) {
         this.tipoEvento = tipoEvento;
-    }
-
-    public Citas getCitas() {
-        return citas;
-    }
-
-    public void setCitas(Citas citas) {
-        this.citas = citas;
     }
 
     public Usuarios getUsuariosidUsuario() {

@@ -6,7 +6,7 @@
                 template="./../../WEB-INF/template/template_principal.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:pt="http://java.sun.com/jsf/passthrough">
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
     <ui:define name="head2">
         <style>
@@ -31,6 +31,7 @@
                 color: #337AB7;
                 width: 100%;
                 text-align: center;
+                border-radius: 20px;
             }           
             .cuadro:before{
                 content: '';
@@ -46,7 +47,7 @@
                 border: 1px solid #337AB7;
             } 
         </style>
-        #{citasRequestt.validarCita()}
+        #{citasRequest.validarCita()}
         <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
         <link href="#{request.contextPath}/resources/css/estilosFormularios.css" rel="stylesheet"/>
         <script src="#{request.contextPath}/resources/plugins/bootstrap-table/bootstrap-table.js" defer=""></script>
@@ -65,119 +66,119 @@
     </ui:define>
     <ui:define name="content">
         <f:view>
-        <h:form>
-            <div class="row">
-                <div class="col-md-5">
-                    <label for="tipoServicio">#{msjGestec.tipo}</label>
-                    <h:selectOneMenu id="tipoServicio"
+            <h:form>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="tipoServicio">#{msjGestec.tipo}</label>
+                        <h:selectOneMenu id="tipoServicio"
+                                         class="form-control"
+                                         style="margin-top: 0"
+                                         value="#{citasRequest.tipoServicio}">
+                            <f:selectItem itemLabel="Instalación" itemValue="2"/>
+                            <f:selectItem itemLabel="Mantenimiento" itemValue="1"/>
+                            <f:selectItem itemLabel="Diagnóstico" itemValue="3"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="tipoEquipo">#{msjGestec.equipo1}</label>
+                        <h:selectOneMenu id="tipoEquipo"
+                                         style="margin-top: 0"
+                                         class="form-control"
+                                         value="#{citasRequest.tipoEquipo}">
+                            <f:selectItem itemLabel="Móvil" itemValue="1"/>
+                            <f:selectItem itemLabel="Computador" itemValue="2"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="cantEquipos">#{msjGestec.CantEquipo}</label>
+                        <h:inputText id="cantEquipos"
+                                     class="form-control" 
+                                     maxlength="4"
+                                     required="true"
+                                     requiredMessage="Mínimo 1 equipo"
+                                     value="#{citasRequest.cantidadEquipos}"/>
+                        <h:message for="cantEquipos" style="color:red"  styleClass="error"></h:message>
+                    </div>
+                </div>
+
+                <label for="descripcion">#{msjGestec.solicitar1}</label>
+                <h:inputText id="descripcion" 
+                             class="form-control"
+                             maxlength="300"
+                             required="true"
+                             requiredMessage="Escriba una descripción"
+                             value="#{citasRequest.descripcionEvento}"/>
+                <h:message for="descripcion" style="color:red"  styleClass="error"></h:message>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="fechaCita">#{msjGestec.solicitar2}</label>
+                        <h:inputText id="fechaCita"
+                                     value="#{citasRequest.fechaCita}" 
+                                     class="form-control"         
+                                     size="20" 
+                                     required="true"
+                                     label="Receipt Date"
+                                     requiredMessage="Digite la fecha de la cita">
+
+                            <f:convertDateTime pattern="yyyy-MM-dd hh:mm" />
+                        </h:inputText>
+                        <h:message for="fechaCita" style="color:red"  styleClass="error"></h:message>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="fechaInicio">#{msjGestec.desde}</label>
+                        <h:inputText id="fechaInicio"
+                                     value="#{citasRequest.horaInicio}" 
+                                     class="form-control"         
+                                     size="20" 
+                                     required="true"
+                                     label="Receipt Date"
+                                     requiredMessage="Digite la fecha de inicio">
+
+                            <f:convertDateTime pattern="yyyy-MM-dd hh:mm" />
+                        </h:inputText>
+                        <h:message for="fechaInicio" style="color:red"  styleClass="error"></h:message>
+                        <h:messages globalOnly="true" showSummary="true" style="color: red;padding: 10px 0"/>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="fechafin">#{msjGestec.hasta}</label>
+                        <h:inputText id="fechaFin"
+                                     value="#{citasRequest.horaFin}" 
                                      class="form-control"
-                                     style="margin-top: 0"
-                                     value="#{citasRequestt.tipoServicio}">
-                        <f:selectItem itemLabel="Instalación" itemValue="1"/>
-                        <f:selectItem itemLabel="Mantenimiento" itemValue="2"/>
-                        <f:selectItem itemLabel="Diagnóstico" itemValue="3"/>
-                    </h:selectOneMenu>
-                </div>
-                <div class="col-md-5">
-                    <label for="tipoEquipo">#{msjGestec.equipo1}</label>
-                    <h:selectOneMenu id="tipoEquipo"
-                                     style="margin-top: 0"
-                                     class="form-control"
-                                     value="#{citasRequestt.tipoEquipo}">
-                        <f:selectItem itemLabel="Móvil" itemValue="1"/>
-                        <f:selectItem itemLabel="Computador" itemValue="2"/>
-                    </h:selectOneMenu>
-                </div>
-                <div class="col-md-2">
-                    <label for="cantEquipos">#{msjGestec.CantEquipo}</label>
-                    <h:inputText id="cantEquipos"
-                                 class="form-control" 
-                                 maxlength="4"
-                                 required="true"
-                                 requiredMessage="Mínimo 1 equipo"
-                                 value="#{citasRequestt.cantidadEquipos}"/>   
-                    <h:message for="cantEquipos" style="color:red"  styleClass="error"></h:message>
-                </div>
-            </div>
+                                     size="20" 
+                                     required="true"
+                                     label="Receipt Date"
+                                     requiredMessage="Digite la fecha de fin">
 
+                            <f:convertDateTime pattern="yyyy-MM-dd hh:mm" />
+                        </h:inputText>
+                        <h:message for="fechaFin" style="color:red"  styleClass="error"></h:message>
 
-
-
-            <label for="descripcion">#{msjGestec.solicitar1}</label>
-            <h:inputText id="descripcion" 
-                         class="form-control"
-                         maxlength="300"
-                         required="true"
-                         requiredMessage="Escriba una descripción"
-                         value="#{citasRequestt.evento.descripcionEvento}"/>
-            <h:message for="descripcion" style="color:red"  styleClass="error"></h:message>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="fechaCita">#{msjGestec.solicitar2}</label>
-                    <h:inputText id="fechaCita"
-                                 value="#{citasRequestt.nuevaCita.fechaCita}" 
-                                 class="form-control"         
-                                 size="20" 
-                                 required="true"
-                                 label="Receipt Date"
-                                 requiredMessage="Digite la fecha de la cita">
-
-                        <f:convertDateTime pattern="yyyy-MM-dd hh:mm" />
-                    </h:inputText>
-                    <h:message for="fechaCita" style="color:red"  styleClass="error"></h:message>
-                </div>
-                <div class="col-md-4">
-                    <label for="fechaInicio">#{msjGestec.desde}</label>
-                    <h:inputText id="fechaInicio"
-                                 value="#{citasRequestt.horaDisponibilidad.horaInicio}" 
-                                 class="form-control"         
-                                 size="20" 
-                                 required="true"
-                                 label="Receipt Date"
-                                 requiredMessage="Digite la fecha de inicio">
-
-                        <f:convertDateTime pattern="yyyy-MM-dd hh:mm" />
-                    </h:inputText>
-                    <h:message for="fechaInicio" style="color:red"  styleClass="error"></h:message>
-                    <h:messages globalOnly="true" showSummary="true" style="color: red;padding: 10px 0"/>
+                    </div>
                 </div>
 
-                <div class="col-md-4">
-                    <label for="fechafin">#{msjGestec.hasta}</label>
-                    <h:inputText id="fechaFin"
-                                 value="#{citasRequestt.horaDisponibilidad.horaFin}" 
-                                 class="form-control"
-                                 size="20" 
-                                 required="true"
-                                 label="Receipt Date"
-                                 requiredMessage="Digite la fecha de fin">
 
-                        <f:convertDateTime pattern="yyyy-MM-dd hh:mm:ss" />
-                    </h:inputText>
-                    <h:message for="fechaFin" style="color:red"  styleClass="error"></h:message>
 
-                </div>
-            </div>
-            
-            
+                <label class="col-md-12">#{msjGestec.solicitar3}</label>
+                <h:selectOneRadio id="tecnicos" value="#{citasRequest.tecnicos}"
+                                  class="col-md-12"
+                                  styleClass ="radio-inline" enabledClass ="radio-inline">
+                    <f:selectItem itemLabel=" #{msjGestec.solicitar4}" itemValue="1"/>
+                    <f:selectItem itemLabel=" #{msjGestec.solicitar5}" itemValue="2"/>
+                    <f:selectItem itemLabel=" #{msjGestec.solicitar6}" itemValue="3"/>
+                </h:selectOneRadio>
 
-            <label class="col-md-12">#{msjGestec.solicitar3}</label>
-            <h:selectOneRadio id="tecnicos" value="#{citasRequestt.tecnicos}"
-                              class="col-md-12"
-                              styleClass ="radio-inline" enabledClass ="radio-inline">
-                <f:selectItem itemLabel=" #{msjGestec.solicitar4}" itemValue="1"/>
-                <f:selectItem itemLabel=" #{msjGestec.solicitar5}" itemValue="2"/>
-                <f:selectItem itemLabel=" #{msjGestec.solicitar6}" itemValue="3"/>
-            </h:selectOneRadio>
 
-            
-            <div class="row">  
-                <h:commandButton actionListener="#{citasRequestt.ingresarCita()}" 
-                                 class="btn btn-primary col-md-3 pull-right" value="#{msjGestec.publicar}"/>
-            </div>
-        </h:form>
-            </f:view>
+                <h:form>
+                    <h:commandButton actionListener="#{citasRequest.ingresarSolicitud()}" 
+                                     style="margin-top: 50px;"
+                                     class="btn btn-primary col-md-6 col-sm-12 pull-right" 
+                                     value="#{msjGestec.publicar}"/>
+                </h:form>
+
+            </h:form>
+        </f:view>
     </ui:define>
 
     <ui:define name="bottom">

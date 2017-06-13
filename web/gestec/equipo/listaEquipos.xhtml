@@ -94,7 +94,8 @@
                                 &nbsp;&nbsp;<h:commandLink
                                     pt:data-toggle="modal" pt:data-target="#myModalEliminar"
                                     ><i class="fa fa-times" aria-hidden="true">
-                                        <f:ajax event="click" listener="#{equipoController.setE(e)}" render="nombreActualizar"></f:ajax>
+                                        <f:ajax event="click" listener="#{equipoController.setE(e)}" 
+                                                render="nombreActualizar"></f:ajax>
                                     </i></h:commandLink>
                                 &nbsp;&nbsp;<h:commandLink action="#{equipoController.vista(e)}">
                                     <i class="fa fa-eye" aria-hiddem="true"></i>

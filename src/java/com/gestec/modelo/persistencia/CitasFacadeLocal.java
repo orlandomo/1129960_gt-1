@@ -30,4 +30,6 @@ public interface CitasFacadeLocal {
 
     int count();
     
+    List<Citas> listarCitas();
+    
 }
