@@ -44,17 +44,47 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#" id="pdf"><span class="fa fa-file-pdf-o"></span> PDF</a></li>
-                    <li><a href="#" id="word"><span class="fa fa-file-word-o"></span> WORD</a></li>
-                    <li><a href="#" id="excel" onclick="tableToExcel('tafiltro', 'W3C Example Table')"><span class="fa fa-file-excel-o"></span> EXCEL</a></li>
+                    <li><a href="#" id="pdf">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/pdf_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            PDF</a>
+                    </li>
+                    <li><a href="#" id="word">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/word_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            WORD
+                        </a></li>
+                    <li><a href="#" id="excel">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/xls_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            EXCEL</a>
+                    </li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#" id="json"><span class="fa fa-file-text"></span> JSON</a></li>
-                    <li><a href="#" id="xml"><span class="fa fa-file-text-o"></span> XML</a></li>
-                    <li><a href="#" id="txt"><span class="fa fa-file-text"></span> TXT</a></li>
-                    <li><a href="#" id="sql"><span class="fa fa-database"></span> SQL</a></li>
-                    <li><a href="#" id="csv"><span class="fa fa-file-text-o"></span> CSV</a></li>
+                    <li><a href="#" id="json">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/json_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            JSON</a></li>
+                    <li><a href="#" id="xml">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/xml_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            XML</a></li>
+                    <li><a href="#" id="txt">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/txt_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            TXT</a></li>
+                    <li><a href="#" id="sql">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/sql_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            SQL</a></li>
+                    <li><a href="#" id="csv">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/pdf_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            CSV</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#" id="png"><span class="fa fa-file-image-o"></span> PNG</a></li>
+                    <li><a href="#" id="png">
+                            <img src="#{request.contextPath}/faces/resources/plugins/tableExport/test/icons/png_2.png"
+                                 style="height: 18px;width: 18px;margin-bottom: 2px;"/>
+                            PNG</a></li>
                 </ul>
             </div>
             <a href="#{request.contextPath}/faces/gestec/equipo/formEquipo.xhtml" style="text-decoration: none;color:white;"><button class="btn btn-primary col-md-5 col-sm-4 col-xs-12" style="margin: 10px 0px;text-decoration: none;">&nbsp; #{msjGestec.nuevo}</button></a>
