@@ -62,6 +62,8 @@ $().ready(function () {
         $('.contenido').toggleClass('col-sm-12');
         $('.contenido').toggleClass('hidden-xs');
         $('.contenido').toggleClass('visible-xs');
+        $('.value').toggleClass('.value');
+        $('.value').toggleClass('.value2');
 
     });
 
