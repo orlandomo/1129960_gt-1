@@ -1,5 +1,6 @@
 package com.gestec.modelo.controladores;
 
+import com.gestec.modelo.entidades.Citas;
 import com.gestec.modelo.entidades.Eventoagenda;
 import com.gestec.modelo.persistencia.EventoagendaFacadeLocal;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -24,12 +26,18 @@ import org.primefaces.model.ScheduleModel;
 
 @ManagedBean
 @ViewScoped
-public class ScheduleView implements Serializable {
+public class CalendarioView implements Serializable {
 
+    @Inject
+    private SesionController sesion;
     @EJB
     private EventoagendaFacadeLocal eafl;
 
     private List<Eventoagenda> eventos;
+
+    private String accion;
+
+    private Citas eventoSeleccionado;
 
     private ScheduleModel eventModel;
 
@@ -42,9 +50,27 @@ public class ScheduleView implements Serializable {
         this.eventos = eafl.findAll();
         eventModel = new DefaultScheduleModel();
         eventos.stream().forEach((evento) -> {
-            eventModel.addEvent(new DefaultScheduleEvent(evento.getNombreEvento(),
+            if (evento.getUsuariosidUsuario().getIdUsuario().equals(sesion.getUsuario().getIdUsuario())) {
+
+            }
+            ScheduleEvent even = new DefaultScheduleEvent(evento.getNombreEvento(),
                     evento.getCitasList().get(0).getSolicitudIdsolicitud().getHoradisponibilidadList().get(0).getHoraInicio(),
-                    evento.getFechaFin()));
+                    evento.getFechaFin(), evento.getCitasList().get(0));
+            DefaultScheduleEvent ev = (DefaultScheduleEvent) even;
+            ev.setDescription(evento.getDescripcionEvento());
+
+            if (evento.getTipoEvento().equals("Servicio")) {
+                ev.setStyleClass("eventoAgenda");
+                ev.setEditable(false);
+            }
+            if (evento.getTipoEvento().equals("Solicitud")) {
+                ev.setStyleClass("eventoSolicitud");
+                ev.setEditable(false);
+            }
+            if (evento.getTipoEvento().equals("Personal")) {
+                ev.setStyleClass("eventoPersonal");
+            }
+            eventModel.addEvent(ev);
         });
     }
 
@@ -69,6 +95,22 @@ public class ScheduleView implements Serializable {
 
     public ScheduleModel getLazyEventModel() {
         return lazyEventModel;
+    }
+
+    public Citas getEventoSeleccionado() {
+        return eventoSeleccionado;
+    }
+
+    public void setEventoSeleccionado(Citas eventoSeleccionado) {
+        this.eventoSeleccionado = eventoSeleccionado;
+    }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
     }
 
     private Calendar today() {
@@ -158,6 +200,8 @@ public class ScheduleView implements Serializable {
 
     public void addEvent(ActionEvent actionEvent) {
         if (event.getId() == null) {
+            DefaultScheduleEvent ev = (DefaultScheduleEvent) event;
+            ev.setStyleClass("eventoPersonal");
             eventModel.addEvent(event);
         } else {
             eventModel.updateEvent(event);
@@ -167,7 +211,8 @@ public class ScheduleView implements Serializable {
     }
 
     public void onEventSelect(SelectEvent selectEvent) {
-        event = (ScheduleEvent) selectEvent.getObject();
+        event = (DefaultScheduleEvent) selectEvent.getObject();
+        this.eventoSeleccionado = (Citas) event.getData();
     }
 
     public void onDateSelect(SelectEvent selectEvent) {

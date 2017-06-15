@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
  
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -21,6 +22,7 @@ import org.primefaces.model.ScheduleModel;
  
 @ManagedBean
 @ViewScoped
+@Named(value = "calendario")
 public class ScheduleView implements Serializable {
  
     private ScheduleModel eventModel;

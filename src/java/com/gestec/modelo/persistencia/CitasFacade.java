@@ -37,5 +37,4 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
         q.setParameter("estadoCita", "Agendada");
         return q.getResultList();
     }
-    
 }

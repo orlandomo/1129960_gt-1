@@ -226,9 +226,16 @@ public class SesionController implements Serializable {
     }
 
     public String formatearFechaNotificacion(Date fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("MMMM dd 'de' yyyy 'a las' hh:mm", new Locale("es", "CO"));
-        String fechaFormato = formato.format(fecha);
-        return fechaFormato;
+        if (fecha != null) {
+            SimpleDateFormat formato = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'a las' hh:mm", new Locale("es", "CO"));
+            String fechaF = formato.format(fecha);
+            if (fechaF.equals("")) {
+                return "Sin fecha";
+            } else {
+                return fechaF;
+            }
+        }
+        return "";
     }
 
     public String iniciarSesion() {
