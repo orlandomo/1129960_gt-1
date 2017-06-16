@@ -2,6 +2,7 @@ package com.gestec.modelo.controladores;
 
 import com.gestec.modelo.entidades.Citas;
 import com.gestec.modelo.entidades.Eventoagenda;
+import com.gestec.modelo.entidades.Usuarios;
 import com.gestec.modelo.persistencia.EventoagendaFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,29 +36,25 @@ public class CalendarioView implements Serializable {
     private EventoagendaFacadeLocal eafl;
 
     private List<Eventoagenda> eventos;
+    private Eventoagenda nuevoEvento;
     private Date fechaInicial;
     private String vista;
     private String accion;
     private Citas eventoSeleccionado;
     private ScheduleModel eventModel;
-    private ScheduleModel lazyEventModel;
 
-    private ScheduleEvent event = new DefaultScheduleEvent();
+    private ScheduleEvent event;
 
     @PostConstruct
     public void init() {
+        this.eventoSeleccionado = new Citas();
+        this.nuevoEvento = new Eventoagenda();
+        this.nuevoEvento.setUsuariosidUsuario(new Usuarios());
         this.fechaInicial = new Date();
         this.vista = "agendaWeek";
+        this.event = new DefaultScheduleEvent();
     }
-
-    public Date getRandomDate(Date base) {
-        Calendar date = Calendar.getInstance();
-        date.setTime(base);
-        date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1);    //set random day of month
-
-        return date.getTime();
-    }
-
+    
     public Date getInitialDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
@@ -105,10 +102,6 @@ public class CalendarioView implements Serializable {
         }
 
         return eventModel;
-    }
-
-    public ScheduleModel getLazyEventModel() {
-        return lazyEventModel;
     }
 
     public Citas getEventoSeleccionado() {
@@ -174,19 +167,20 @@ public class CalendarioView implements Serializable {
         return eventosProximos;
     }
 
-    private Calendar today() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
-
-        return calendar;
-    }
-
     public ScheduleEvent getEvent() {
         return event;
     }
 
     public void setEvent(ScheduleEvent event) {
         this.event = event;
+    }
+
+    public Eventoagenda getNuevoEvento() {
+        return nuevoEvento;
+    }
+
+    public void setNuevoEvento(Eventoagenda nuevoEvento) {
+        this.nuevoEvento = nuevoEvento;
     }
 
     public void irAEvento(Date fecha) {
@@ -198,7 +192,15 @@ public class CalendarioView implements Serializable {
         if (event.getId() == null) {
             DefaultScheduleEvent ev = (DefaultScheduleEvent) event;
             ev.setStyleClass("eventoPersonal");
+            /*nuevoEvento.setDescripcionEvento("sdadas");
+            nuevoEvento.setFechaInicio(ev.getStartDate());
+            nuevoEvento.setFechaFin(ev.getEndDate());
+            nuevoEvento.setTipoEvento("Personal");
+            nuevoEvento.setNombreEvento(ev.getTitle());
+            nuevoEvento.setUsuariosidUsuario(sesion.getUsuario());
+            eafl.create(nuevoEvento);*/
             eventModel.addEvent(event);
+            
         } else {
             eventModel.updateEvent(event);
         }
@@ -208,7 +210,11 @@ public class CalendarioView implements Serializable {
 
     public void onEventSelect(SelectEvent selectEvent) {
         event = (DefaultScheduleEvent) selectEvent.getObject();
-        this.eventoSeleccionado = (Citas) event.getData();
+
+        if (!event.getStyleClass().equals("eventoPersonal")) {
+            this.eventoSeleccionado = (Citas) event.getData();
+        }
+
     }
 
     public void onDateSelect(SelectEvent selectEvent) {

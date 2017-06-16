@@ -136,7 +136,10 @@
                         <h:selectBooleanCheckbox id="allDay" value="#{calendarioView.event.allDay}" />
 
                         <p:commandButton type="reset" value="Limpiar" />
-                        <p:commandButton id="addButton" value="Guardar" actionListener="#{calendarioView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                        <p:commandButton id="addButton" value="Guardar" actionListener="#{calendarioView.addEvent}"
+                                         oncomplete="PF('myschedule').update();PF('eventDialog').hide();" >
+
+                        </p:commandButton>
                     </h:panelGrid>
                 </p:dialog>    
 
