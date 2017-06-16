@@ -30,4 +30,6 @@ public interface EventoagendaFacadeLocal {
 
     int count();
     
+    List<Eventoagenda> listarMisEventos(Integer idUsuario);
+    
 }

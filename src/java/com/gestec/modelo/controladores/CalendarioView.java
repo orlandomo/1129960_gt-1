@@ -4,6 +4,7 @@ import com.gestec.modelo.entidades.Citas;
 import com.gestec.modelo.entidades.Eventoagenda;
 import com.gestec.modelo.persistencia.EventoagendaFacadeLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,44 +35,19 @@ public class CalendarioView implements Serializable {
     private EventoagendaFacadeLocal eafl;
 
     private List<Eventoagenda> eventos;
-
+    private Date fechaInicial;
+    private String vista;
     private String accion;
-
     private Citas eventoSeleccionado;
-
     private ScheduleModel eventModel;
-
     private ScheduleModel lazyEventModel;
 
     private ScheduleEvent event = new DefaultScheduleEvent();
 
     @PostConstruct
     public void init() {
-        this.eventos = eafl.findAll();
-        eventModel = new DefaultScheduleModel();
-        eventos.stream().forEach((evento) -> {
-            if (evento.getUsuariosidUsuario().getIdUsuario().equals(sesion.getUsuario().getIdUsuario())) {
-
-            }
-            ScheduleEvent even = new DefaultScheduleEvent(evento.getNombreEvento(),
-                    evento.getCitasList().get(0).getSolicitudIdsolicitud().getHoradisponibilidadList().get(0).getHoraInicio(),
-                    evento.getFechaFin(), evento.getCitasList().get(0));
-            DefaultScheduleEvent ev = (DefaultScheduleEvent) even;
-            ev.setDescription(evento.getDescripcionEvento());
-
-            if (evento.getTipoEvento().equals("Servicio")) {
-                ev.setStyleClass("eventoAgenda");
-                ev.setEditable(false);
-            }
-            if (evento.getTipoEvento().equals("Solicitud")) {
-                ev.setStyleClass("eventoSolicitud");
-                ev.setEditable(false);
-            }
-            if (evento.getTipoEvento().equals("Personal")) {
-                ev.setStyleClass("eventoPersonal");
-            }
-            eventModel.addEvent(ev);
-        });
+        this.fechaInicial = new Date();
+        this.vista = "agendaWeek";
     }
 
     public Date getRandomDate(Date base) {
@@ -90,6 +66,44 @@ public class CalendarioView implements Serializable {
     }
 
     public ScheduleModel getEventModel() {
+        this.eventos = eafl.listarMisEventos(sesion.getUsuario().getIdUsuario());
+        eventModel = new DefaultScheduleModel();
+
+        for (Eventoagenda evento : eventos) {
+            if (evento.getUsuariosidUsuario().getIdUsuario().equals(sesion.getUsuario().getIdUsuario())) {
+
+            }
+            ScheduleEvent even = new DefaultScheduleEvent();
+            if (evento.getCitasList().isEmpty()) {
+
+                even = new DefaultScheduleEvent(evento.getNombreEvento(),
+                        evento.getFechaInicio(),
+                        evento.getFechaFin());
+            }
+            if (!evento.getCitasList().isEmpty()) {
+                even = new DefaultScheduleEvent(evento.getNombreEvento(),
+                        evento.getFechaInicio(),
+                        evento.getFechaFin(),
+                        evento.getCitasList().get(0));
+            }
+            DefaultScheduleEvent ev = (DefaultScheduleEvent) even;
+            ev.setDescription(evento.getDescripcionEvento());
+
+            if (evento.getTipoEvento().equals("Servicio")) {
+                ev.setStyleClass("eventoAgenda");
+                ev.setEditable(false);
+            }
+            if (evento.getTipoEvento().equals("Solicitud")) {
+                ev.setStyleClass("eventoSolicitud");
+                ev.setEditable(false);
+            }
+            if (evento.getTipoEvento().equals("Personal")) {
+                ev.setStyleClass("eventoPersonal");
+            }
+            eventModel.addEvent(ev);
+
+        }
+
         return eventModel;
     }
 
@@ -113,81 +127,58 @@ public class CalendarioView implements Serializable {
         this.accion = accion;
     }
 
+    public Date getFechaInicial() {
+        return fechaInicial;
+    }
+
+    public void setFechaInicial(Date fechaInicial) {
+        this.fechaInicial = fechaInicial;
+    }
+
+    public String getVista() {
+        return vista;
+    }
+
+    public void setVista(String vista) {
+        this.vista = vista;
+    }
+
+    public List<Eventoagenda> getEventosProximos() {
+        this.eventos = eafl.listarMisEventos(sesion.getUsuario().getIdUsuario());
+        List<Eventoagenda> eventosProximos = new ArrayList<>();
+        if (eventos.size() == 1) {
+            eventosProximos.add(eventos.get(0));
+        }
+        if (eventos.size() == 2) {
+            eventosProximos.add(eventos.get(0));
+            eventosProximos.add(eventos.get(1));
+        }
+        if (eventos.size() == 3) {
+            eventosProximos.add(eventos.get(0));
+            eventosProximos.add(eventos.get(1));
+            eventosProximos.add(eventos.get(2));
+        }
+        if (eventos.size() == 4) {
+            eventosProximos.add(eventos.get(0));
+            eventosProximos.add(eventos.get(1));
+            eventosProximos.add(eventos.get(2));
+            eventosProximos.add(eventos.get(3));
+        }
+        if (eventos.size() >= 5) {
+            eventosProximos.add(eventos.get(0));
+            eventosProximos.add(eventos.get(1));
+            eventosProximos.add(eventos.get(2));
+            eventosProximos.add(eventos.get(3));
+            eventosProximos.add(eventos.get(4));
+        }
+        return eventosProximos;
+    }
+
     private Calendar today() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
 
         return calendar;
-    }
-
-    private Date previousDay8Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 8);
-
-        return t.getTime();
-    }
-
-    private Date previousDay11Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 11);
-
-        return t.getTime();
-    }
-
-    private Date today1Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 1);
-
-        return t.getTime();
-    }
-
-    private Date theDayAfter3Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 3);
-
-        return t.getTime();
-    }
-
-    private Date today6Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 6);
-
-        return t.getTime();
-    }
-
-    private Date nextDay9Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 9);
-
-        return t.getTime();
-    }
-
-    private Date nextDay11Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 11);
-
-        return t.getTime();
-    }
-
-    private Date fourDaysLater3pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);
-        t.set(Calendar.HOUR, 3);
-
-        return t.getTime();
     }
 
     public ScheduleEvent getEvent() {
@@ -196,6 +187,11 @@ public class CalendarioView implements Serializable {
 
     public void setEvent(ScheduleEvent event) {
         this.event = event;
+    }
+
+    public void irAEvento(Date fecha) {
+        setFechaInicial(fecha);
+        setVista("agendaDay");
     }
 
     public void addEvent(ActionEvent actionEvent) {

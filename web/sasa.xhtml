@@ -7,68 +7,138 @@
     <h:head>
         <title>Facelet Title</title>
         <link href="#{request.contextPath}/resources/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
-    <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
-    <link href="#{request.contextPath}/resources/img/icono.png" rel="shortcut icon" type="image/png"/>
-    <link href="#{request.contextPath}/resources/css/font-awesome.css" rel="stylesheet"/>
-    <link href="#{request.contextPath}/resources/plugins/bootstrap/bootstrap.css" rel="stylesheet"/>
-    <link href="#{request.contextPath}/resources/css/estilos2.css" rel="stylesheet"/>
-    <link href="#{request.contextPath}/resources/css/Menu-borde.css"/>
-  
-    <script src="#{request.contextPath}/resources/plugins/bootstrap/bootstrap.js" defer=""></script>
-    <script src="#{request.contextPath}/resources/plugins/sweetalert/sweetalert.min.js" defer=""></script>
-    
+        <link href="#{request.contextPath}/resources/css/Menu-borde.css" rel="stylesheet"/>
+        <link href="#{request.contextPath}/resources/img/icono.png" rel="shortcut icon" type="image/png"/>
+        <link href="#{request.contextPath}/resources/css/font-awesome.css" rel="stylesheet"/>
+        <link href="#{request.contextPath}/resources/plugins/bootstrap/bootstrap.css" rel="stylesheet"/>
+        <link href="#{request.contextPath}/resources/css/estilos2.css" rel="stylesheet"/>
+        <link href="#{request.contextPath}/resources/css/Menu-borde.css"/>
+
+        <script src="#{request.contextPath}/resources/plugins/bootstrap/bootstrap.js" defer=""></script>
+        <script src="#{request.contextPath}/resources/plugins/sweetalert/sweetalert.min.js" defer=""></script>
+
 
         <script src="#{request.contextPath}/resources/plugins/bootstrap-table/bootstrap-table.js" defer=""></script>
         <script src="#{request.contextPath}/resources/js/admin.js" defer=""></script>
         <script src="#{request.contextPath}/resources/js/Menu.js" defer=""></script>   
     </h:head>
     <h:body>
-        <h:form>
-            <p:growl id="messages" showDetail="true" />
 
-            <h:panelGrid columnClasses="value">
-                <p:schedule id="schedule" value="#{calendarioView.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
 
-                    <p:ajax event="dateSelect" listener="#{calendarioView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventSelect" listener="#{calendarioView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-                    <p:ajax event="eventMove" listener="#{calendarioView.onEventMove}" update="messages" />
-                    <p:ajax event="eventResize" listener="#{calendarioView.onEventResize}" update="messages" />
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" />
 
-                </p:schedule>
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="inline" value="Inline:" />
+                <p:calendar id="inline" value="#{calendarView.date1}" mode="inline" />
+
+                <p:outputLabel for="popup" value="Popup:" />
+                <p:calendar id="popup" value="#{calendarView.date2}" />
+
+                <p:outputLabel for="button" value="Button:" />
+                <p:calendar id="button" value="#{calendarView.date3}" showOn="button" />
+
+                <p:outputLabel for="event" value="Select Event:" />
+                <p:calendar id="event" value="#{calendarView.date4}">
+                    <p:ajax event="dateSelect" listener="#{calendarView.onDateSelect}" update="msgs" />
+                </p:calendar>
+
+                <p:outputLabel for="german" value="German:" />
+                <p:calendar id="german" value="#{calendarView.date5}" locale="de" navigator="true" pattern="yyyy-MMM-dd" />
+
+                <p:outputLabel for="restricted" value="Restricted:" />
+                <p:calendar id="restricted" value="#{calendarView.date6}" mindate="4/1/14" maxdate="7/1/14" />
+
+                <p:outputLabel for="multi" value="Multiple:" />
+                <p:calendar id="multi" value="#{calendarView.date7}" pages="3" />
+
+                <p:outputLabel for="effect" value="Effect:" />
+                <p:calendar id="effect" value="#{calendarView.date8}" effect="fold" />
+
+                <p:outputLabel for="mask" value="Mask:" />
+                <p:calendar id="mask" value="#{calendarView.date9}" pattern="dd-MM-yyyy" mask="true" />
+
+                <p:outputLabel for="datetime" value="Datetime:" />
+                <p:calendar id="datetime" value="#{calendarView.date10}" pattern="MM/dd/yyyy HH:mm:ss" />
+
+                <p:outputLabel for="time" value="Time:" />
+                <p:calendar id="time" value="#{calendarView.date11}" pattern="HH:mm" timeOnly="true"  />
             </h:panelGrid>
 
-            <p:dialog widgetVar="eventDialog" header="Nuevo evento" showEffect="clip" hideEffect="clip">
-                <h:panelGrid id="eventDetails" columns="2">
-                    <p:outputLabel for="title" value="Título:" />
-                    <p:inputText id="title" value="#{calendarioView.event.title}" required="true" />
+            <p:commandButton value="Submit" update="msgs" actionListener="#{calendarView.click}" icon="ui-icon-check" />
 
-                    <p:outputLabel for="from" value="Desde:" />
-                    <p:calendar id="from" value="#{calendarioView.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+            <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                <p:panelGrid id="display" columns="2" columnClasses="label,value">
+                    <h:outputText value="Inline:" />
+                    <h:outputText value="#{calendarView.date1}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
 
-                    <p:outputLabel for="to" value="Hasta:" />
-                    <p:calendar id="to" value="#{calendarioView.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+                    <h:outputText value="Popup:" />
+                    <h:outputText value="#{calendarView.date2}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
 
-                    <p:outputLabel for="allDay" value="Todo el día:" />
-                    <h:selectBooleanCheckbox id="allDay" value="#{calendarioView.event.allDay}" />
+                    <h:outputText value="Button:" />
+                    <h:outputText value="#{calendarView.date3}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
 
-                    <p:commandButton type="reset" value="Limpiar" />
-                    <p:commandButton id="addButton" value="Guardar" actionListener="#{calendarioView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-                </h:panelGrid>
-            </p:dialog>    
+                    <h:outputText value="Event:" />
+                    <h:outputText value="#{calendarView.date4}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+
+                    <h:outputText value="German:" />
+                    <h:outputText value="#{calendarView.date5}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+
+                    <h:outputText value="Restricted:" />
+                    <h:outputText value="#{calendarView.date6}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+
+                    <h:outputText value="Multiple:" />
+                    <h:outputText value="#{calendarView.date7}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+
+                    <h:outputText value="Effect:" />
+                    <h:outputText value="#{calendarView.date8}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+
+                    <h:outputText value="Mask:" />
+                    <h:outputText value="#{calendarView.date9}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+
+                    <h:outputText value="Datetime:" />
+                    <h:outputText value="#{calendarView.date10}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+
+                    <h:outputText value="Time:" />
+                    <h:outputText value="#{calendarView.date11}">
+                        <f:convertDateTime pattern="HH:mm" />
+                    </h:outputText>
+                </p:panelGrid>
+            </p:dialog>
         </h:form>
 
         <script>
 
 
-        PrimeFaces.locales['es'] = {
+            PrimeFaces.locales['es'] = {
                 closeText: 'Cerrar',
                 prevText: 'Anterior',
                 nextText: 'Siguiente',
-                monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-                dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-                dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-                dayNamesMin: ['D','L','M','M','J','V','S'],
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
                 weekHeader: 'Semana',
                 firstDay: 1,
                 isRTL: false,
@@ -84,9 +154,9 @@
                 month: 'Mes',
                 week: 'Semana',
                 day: 'Día',
-                allDayText : 'Todo el día'
-        };
-        
+                allDayText: 'Todo el día'
+            };
+
         </script>
         <style type="text/css">
             .value {

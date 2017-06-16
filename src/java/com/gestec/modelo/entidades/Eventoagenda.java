@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Eventoagenda.findByNombreEvento", query = "SELECT e FROM Eventoagenda e WHERE e.nombreEvento = :nombreEvento"),
     @NamedQuery(name = "Eventoagenda.findByFechaInicio", query = "SELECT e FROM Eventoagenda e WHERE e.fechaInicio = :fechaInicio"),
     @NamedQuery(name = "Eventoagenda.findByFechaFin", query = "SELECT e FROM Eventoagenda e WHERE e.fechaFin = :fechaFin"),
+    @NamedQuery(name = "Eventoagenda.findByUsuario", query = "SELECT e FROM Eventoagenda e WHERE e.usuariosidUsuario.idUsuario = :idUsuario"),
     @NamedQuery(name = "Eventoagenda.findByTipoEvento", query = "SELECT e FROM Eventoagenda e WHERE e.tipoEvento = :tipoEvento")})
 public class Eventoagenda implements Serializable {
 

@@ -5,7 +5,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../../WEB-INF/template/template_principal.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="titulo">Calendario</ui:define>
 
@@ -24,40 +25,92 @@
     </ui:define>
 
     <ui:define name="content">
+        <h:form>
 
-        <div class="col-md-3" style="padding: 0">
+            <div class="col-md-3" style="padding: 0">
 
-            <div class="inicio col-md-12" style="padding:10px">
+                <div class="inicio col-md-12" style="padding:4px;overflow-x: auto;overflow-y: hidden">
 
-                <strong style="font-size: 20px;"><center>Convenciones</center></strong>
+                    <strong style="font-size: 18px;padding: 13px">Ir a:</strong>
 
-                <hr style="margin: 5px 0;border-top-color: #ddd"/>
+                    <p:growl id="msgs" showDetail="true" />
 
-                <div class="col-md-12" style="margin: 3px 0;">
-                    <div class="eventoAgenda" 
-                         style="padding: 5px;width: 10px;border-radius: 50%;float: left;margin-top: 5px;"></div>
-                    &nbsp;&nbsp;Solicitudes sin confirmar    
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:calendar id="inline" value="#{calendarioView.fechaInicial}" mode="inline"
+                                    widgetVar="cal">
+                            <p:ajax event="dateSelect" update="schedule"></p:ajax>
+                        </p:calendar>
+                    </h:panelGrid>
+
+                    <div class="col-md-6 col-md-offset-6" style="padding: 5px 0">
+
+                    </div>
+
                 </div>
-                <div class="col-md-12" style="margin: 3px 0;">
-                    <div class="eventoSolicitud" 
-                         style="padding: 5px;width: 10px;border-radius: 50%;float: left;margin-top: 5px;"></div>
-                    &nbsp;&nbsp;Citas agendadas   
+                <div class="inicio col-md-12" style="padding:10px;margin-top: 10px">
+
+                    <strong style="font-size: 20px;"><center>Eventos próximos</center></strong>
+                    <hr style="margin: 5px 0;border-top-color: #ddd"/>
+                    
+                    <c:if test="#{calendarioView.eventosProximos.size()!=0}">
+                        <c:forEach items="#{calendarioView.eventosProximos}" var="ep">
+                        <div class="col-md-12">
+                            <span class="fa fa-clock-o"> </span>
+                            <h:commandLink class="enlace-perfil" value="&nbsp;#{ep.nombreEvento}">
+                                <f:ajax event="click" render="schedule" listener="#{calendarioView.irAEvento(ep.fechaInicio)}"/>
+                            </h:commandLink>
+                        </div>
+                    </c:forEach>
+                    </c:if>
+                    <c:if test="#{calendarioView.eventosProximos.size()==0}">
+                        <center>
+                            <span class="fa fa-clock-o fa-5x"></span>
+                            <h4>No tienes eventos</h4>
+                        </center>
+                        <div class="col-md-12" style="padding: 0">
+                            <h:commandButton class="col-md-6 col-md-offset-6 btn btn-primary"
+                                             value="Crear evento" onclick="PF('eventDialog').show();">
+                                <f:ajax event="click" render="schedule"/>
+                            </h:commandButton>
+                        </div>
+                    </c:if>
+                    
+                    
                 </div>
-                <div class="col-md-12" style="margin: 3px 0;">
-                    <div class="eventoPersonal" 
-                         style="padding: 5px;width: 10px;border-radius: 50%;float: left;margin-top: 5px;"></div>
-                    &nbsp;&nbsp;Eventos personales  
+
+                <div class="inicio col-md-12" style="padding:10px;margin-top: 10px">
+
+                    <strong style="font-size: 20px;"><center>Convenciones</center></strong>
+
+                    <hr style="margin: 5px 0;border-top-color: #ddd"/>
+
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <div class="eventoAgenda" 
+                             style="padding: 5px;width: 10px;border-radius: 50%;float: left;margin-top: 5px;"></div>
+                        &nbsp;&nbsp;Solicitudes sin confirmar    
+                    </div>
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <div class="eventoSolicitud" 
+                             style="padding: 5px;width: 10px;border-radius: 50%;float: left;margin-top: 5px;"></div>
+                        &nbsp;&nbsp;Citas agendadas   
+                    </div>
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <div class="eventoPersonal" 
+                             style="padding: 5px;width: 10px;border-radius: 50%;float: left;margin-top: 5px;"></div>
+                        &nbsp;&nbsp;Eventos personales  
+                    </div>
                 </div>
+                
+                
+
             </div>
 
-        </div>
-
-        <div class="col-md-9">
-            <h:form>
-                <p:growl id="messages" showDetail="true" />
+            <div class="col-md-9">
+                <p:growl id="messages" showDetail="true" />   
 
                 <h:panelGrid columnClasses="value">
-                    <p:schedule id="schedule" view="agendaWeek" value="#{calendarioView.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
+                    <p:schedule id="schedule" view="#{calendarioView.vista}" value="#{calendarioView.eventModel}" 
+                                widgetVar="myschedule" timeZone="GMT+2" initialDate="#{calendarioView.fechaInicial}">
 
                         <p:ajax event="dateSelect" listener="#{calendarioView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                         <p:ajax event="eventSelect" listener="#{calendarioView.onEventSelect}" update="mensaje" oncomplete="$('#confirmacionSolicitud').modal('show');" />
@@ -66,6 +119,7 @@
 
                     </p:schedule>
                 </h:panelGrid>
+
 
                 <p:dialog widgetVar="eventDialog" header="Nuevo evento" showEffect="clip" hideEffect="clip">
                     <h:panelGrid id="eventDetails" columns="2">
@@ -88,7 +142,7 @@
 
                 <div id="confirmacionSolicitud" class="modal fade bs-example-modal-sm" tabindex="-1" 
                      role="dialog" aria-labelledby="mySmallModalLabel">
-                    <div class="modal-dialog modal-sm" role="document" style="width: 300px">
+                    <div class="modal-dialog modal-sm" role="document" style="width: 400px">
                         <div class="modal-content" style="background-color: #ddd;">
                             <h:panelGroup id="mensaje">
                                 <c:if test="#{calendarioView.event.styleClass == 'eventoPersonal'}">
@@ -204,14 +258,15 @@
                     </div>
                 </div>
 
-            </h:form>
-        </div>
+            </div>
+        </h:form>
 
 
 
 
 
         <script>
+
             $('#ddd').click(function () {
                 $('#confirmacionSolicitud').modal('show');
 
@@ -261,6 +316,12 @@
             .eventoPersonal{
                 background: red;
                 cursor: pointer;
+            }
+            .fc-button-prev{
+                display: none;
+            }
+            .fc-button-next{
+                display: none;
             }
 
         </style>
