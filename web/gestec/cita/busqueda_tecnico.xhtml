@@ -6,7 +6,8 @@
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 template="./../../WEB-INF/template/template_principal.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">
         <f:view locale="#{sesionGestec.idiomaSeleccionado}">#{msjGestec.equipos}</f:view></ui:define>
@@ -126,7 +127,9 @@
                     <c:forEach items="#{citasRequest.tecnicosCita}" var="tc">
                         <div class="row" style="background: #fff;padding: 10px;border-bottom: 1px solid #ddd;">
                             <div class="col-md-1">
-                                <img src="../../resources/img/tecnico1.jpg" alt="" style="width: 50px;height: 50px;"/>
+                                <p:graphicImage value="#{citasRequest.imagenTecnico}" style="height: 50px;width: 50px">
+                                    <f:param name="imgTecnico" value="#{tc.idUsuario}"/>
+                                </p:graphicImage>
                             </div>
 
                             <div class="col-md-11 pull-right">

@@ -5,7 +5,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 template="./../../WEB-INF/template/template_principal_sin_menu.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="head2">
         <link href="#{request.contextPath}/resources/css/estilosFormularios.css" rel="stylesheet"/>
@@ -50,7 +51,9 @@
                         </h3>
                         <hr/>
                   
-                        <img src="#{request.contextPath}/resources/img/pagar.png" class="img-circle" style="width: 130px;height: 130px;"/>
+                        <p:graphicImage value="#{sesionGestec.imagenPerfil2}" class="img-circle" style="width: 130px;height: 130px;">
+                            <f:param name="pid2" value="#{sesionGestec.usuario.idUsuario}"/>
+                        </p:graphicImage>
                         <h4 style="padding: 10px"><strong>#{sesionGestec.usuario.nombreUsuario} #{sesionGestec.usuario.apellido}</strong></h4>
                         <h4>#{sesionGestec.usuario.tipoUsuario}</h4>
 
@@ -614,8 +617,9 @@
 
                             <div class="row" style="padding: 10px;">
                                 <div class="col-md-2 col-sm-2 col-xs-2">
-                                    <img src="#{request.contextPath}/resources/img/tecnico1.jpg" 
-                                         style="height: 40px;width: 40px"/>
+                                    <p:graphicImage value="#{sesionGestec.imagenContacto}" style="height: 40px;width: 40px">
+                                        <f:param name="imgC" value="#{cont.idUsuario.idUsuario}"/>
+                                    </p:graphicImage>
                                 </div>
                                 <div class="col-md-10 col-sm-10 col-xs-10">
 

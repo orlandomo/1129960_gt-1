@@ -29,6 +29,7 @@ import com.gestec.modelo.persistencia.RelsolicitudtipoFacadeLocal;
 import com.gestec.modelo.persistencia.ServicioFacadeLocal;
 import com.gestec.modelo.persistencia.SolicitudFacadeLocal;
 import com.gestec.modelo.persistencia.UsuariosFacadeLocal;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -46,8 +47,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.PhaseId;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -402,6 +406,21 @@ public class CitasRequest implements Serializable {
         return tecnico.getDireccionList();
     }
 
+    public StreamedContent getImagenTecnico() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+            String parametro = context.getExternalContext().getRequestParameterMap().get("imgTecnico");
+            byte[] imagen = ufl.find(Integer.valueOf(parametro)).getFotoPerfil();
+            if (sesion.getUsuario().getFotoPerfil() == null) {
+                return new DefaultStreamedContent(new ByteArrayInputStream(ufl.find(1).getFotoPerfil()));
+            }
+            return new DefaultStreamedContent(new ByteArrayInputStream(imagen));
+        }
+    }
+
     public Integer validarFiltro() {
         if (this.tecnicos == 1) {
             return 1;
@@ -520,7 +539,7 @@ public class CitasRequest implements Serializable {
         setCita(cita);
         return "detalle_cita.xhtml?faces-redirect=true";
     }
-    
+
     public void verDetalleNotificacion(Citas cita, NotificacionCita not) {
         setCita(cita);
         not.setEstadoNotificacion("Visto");

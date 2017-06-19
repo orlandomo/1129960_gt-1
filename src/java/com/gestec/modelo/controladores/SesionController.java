@@ -20,8 +20,10 @@ import com.gestec.modelo.persistencia.MensajeFacadeLocal;
 import com.gestec.modelo.persistencia.NotificacionCitaFacadeLocal;
 import com.gestec.modelo.persistencia.NotificacionUsuarioFacadeLocal;
 import com.gestec.modelo.persistencia.UsuariosFacadeLocal;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +40,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.PhaseId;
 import javax.inject.Named;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @Named(value = "sesionGestec")
 @ManagedBean(name = "sesion")
@@ -219,6 +224,101 @@ public class SesionController implements Serializable {
             }
         }
         return cantidad;
+    }
+
+    public StreamedContent getImagenPerfil() throws IOException, SQLException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+            String id = context.getExternalContext().getRequestParameterMap()
+                    .get("pid");
+            Integer idF = Integer.valueOf(id);
+            byte[] image = ufl.find(idF).getFotoPerfil();
+            if (image == null) {
+                return new DefaultStreamedContent(new ByteArrayInputStream(ufl.find(1).getFotoPerfil()));
+            }
+            return new DefaultStreamedContent(new ByteArrayInputStream(image));
+
+        }
+    }
+
+    public StreamedContent getImagenPerfil2() throws IOException, SQLException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = context.getExternalContext().getRequestParameterMap()
+                    .get("pid2");
+            Integer idF = Integer.valueOf(id);
+            byte[] image = ufl.find(idF).getFotoPerfil();
+            if (image == null) {
+                return new DefaultStreamedContent(new ByteArrayInputStream(ufl.find(1).getFotoPerfil()));
+            }
+            return new DefaultStreamedContent(new ByteArrayInputStream(image));
+
+        }
+    }
+
+    public StreamedContent getImagenPerfilExterno() throws IOException, SQLException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = context.getExternalContext().getRequestParameterMap()
+                    .get("imgPerfil");
+            Integer idF = Integer.valueOf(id);
+            byte[] image = ufl.find(idF).getFotoPerfil();
+            if (image == null) {
+                return new DefaultStreamedContent(new ByteArrayInputStream(ufl.find(1).getFotoPerfil()));
+            }
+            return new DefaultStreamedContent(new ByteArrayInputStream(image));
+
+        }
+    }
+
+    public StreamedContent getImagenContacto() throws IOException, SQLException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = context.getExternalContext().getRequestParameterMap()
+                    .get("imgC");
+            Integer idF = Integer.valueOf(id);
+            byte[] image = ufl.find(idF).getFotoPerfil();
+            if (image == null) {
+                return new DefaultStreamedContent(new ByteArrayInputStream(ufl.find(1).getFotoPerfil()));
+            }
+            return new DefaultStreamedContent(new ByteArrayInputStream(image));
+
+        }
+    }
+    
+
+    public StreamedContent getImagenContactoExterno() throws IOException, SQLException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            return new DefaultStreamedContent();
+        } else {
+
+            String id = context.getExternalContext().getRequestParameterMap()
+                    .get("imgCE");
+            Integer idF = Integer.valueOf(id);
+            byte[] image = ufl.find(idF).getFotoPerfil();
+            if (image == null) {
+                return new DefaultStreamedContent(new ByteArrayInputStream(ufl.find(1).getFotoPerfil()));
+            }
+            return new DefaultStreamedContent(new ByteArrayInputStream(image));
+
+        }
     }
 
     public Boolean validarCantNotificaciones() {
